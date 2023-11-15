@@ -1,0 +1,81 @@
+*, ::before, ::after
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #051D0B;
+}
+.justeprix {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.carte {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3.5em;
+    border: 7px solid black;
+    height: 12em;
+    width: 9em;
+    margin-top: 30px;
+    border-radius: 0.4em;
+    border-style: double;
+    background-color: rgb(199, 36, 36);
+}
+.devine {
+    font-size: 40px;
+    text-align: center;
+}
+.hidden{display: none;}
+.again {
+    border: none;
+    text-decoration: none;
+    padding: 0.2rem 0.2rem;
+    text-transform: capitalize;
+    letter-spacing: var(--spacing);
+    display: inline-block;
+    font-size: 1rem;
+    border-radius: .3rem;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+.texte{
+    margin-top: 5em;
+    font-size: 30px;
+    text-align: center;
+}
+#guess {
+    border: 3px solid rgb(0, 204, 255);
+    border-radius: 0.5em;
+    background-color: rgb(238, 222, 222);
+    height: 3em;
+    width: 5em;
+    margin-top: 5em;
+}
+#guess:disabled {
+    background-color: gray;
+    border: none;
+}
+.nombre {
+    color: white;
+}
+#submit {
+    border: none;
+    text-decoration: none;
+    padding: 0.2rem 0.2rem;
+    text-transform: capitalize;
+    display: inline-block;
+    font-size: 1.7rem;
+    border-radius: .3rem;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+#submit:disabled {background-color: grey;}

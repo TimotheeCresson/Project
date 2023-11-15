@@ -1,0 +1,51 @@
+*, ::before, ::after
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 150px;
+    border: 2px solid rgb(255, 250, 250);
+    cursor: pointer;
+    font-size: 10em;
+}
+.firstplayer {
+    color: white;
+    font-size: 30px;
+}
+.restart {
+    background-color: rgba(13, 102, 102, 0.486);
+    padding: 10px 20px;
+    margin-top: 40px;
+    border-radius: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+}
+.message {
+    font-size: 1.2em;
+    color: white;
+}

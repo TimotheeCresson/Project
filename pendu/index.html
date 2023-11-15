@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le jeu du pendu</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script3.js" defer></script>
+</head>
+<body>
+    <div class="title">
+        <h1>Le Jeu du Bonhomme Pendu</h1>
+        <p>Trouver le mot caché - Entrez une lettre à la fois</p>
+    </div>
+    <div class="jeu-conteneur">
+        <svg height="250" width="200" class="pendu-conteneur">
+            <!-- Support du pendu -->
+            <line x1="60" y1="20" x2="140" y2="20" />
+            <line x1="140" y1="20" x2="140" y2="50" />
+            <line x1="60" y1="20" x2="60" y2="220" />
+            <line x1="60" y1="20" x2="140" y2="20" />
+            <line x1="20" y1="220" x2="100" y2="220" />
+
+            <!-- Tête du personnage -->
+            <!-- La tête -->
+            <circle cx ="140" cy="70" r="20" class="bonhomme-membre"/> <!-- cx= center x   et r= rayon-->
+            
+            <!--
+            ==================
+                Le corps
+            ==================
+            -->
+            <line x1="140" y1="90" x2="140" y2="160" class="bonhomme-membre"/>
+
+            <!-- Les bras -->
+            <line x1="140" y1="120" x2="120" y2="100" class="bonhomme-membre"/>
+            <line x1="140" y1="120" x2="160" y2="100" class="bonhomme-membre"/>
+            <!-- Les jambes-->
+            <line x1="140" y1="160" x2="120" y2="180" class="bonhomme-membre"/>
+            <line x1="140" y1="160" x2="160" y2="180" class="bonhomme-membre"/>
+        </svg>
+    </div>
+    <div class="mot" id="mot"></div>
+    <div id="errorCount">0</div>
+    <div id="usedLetters"></div>
+    <div id="selectedLetters"></div>
+
+
+            <div class="messageFinal" id="message-conteneur">
+                <div class="texte">
+                    <p class="message">Vous avez gagné</p>
+                    <button id="rejouer">Rejouer</button>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
