@@ -4,7 +4,7 @@
 Styles
 ==============================
 */
-const styles = `
+const styles = /* CSS */ ` 
     *, ::before, ::after {
         margin: 0;
         padding: 0;
@@ -116,7 +116,7 @@ const styles = `
         width: 90vw;
         border: 1px solid red;
         position: relative;
-        cursor: crosshair;
+        cursor: url(https://cur.cursors-4u.net/holidays/hol-4/hol393.cur), auto !important;;
         padding: 10px;
         box-shadow: 2px 2px 5px black;
         overflow: hidden;
@@ -134,7 +134,9 @@ const styles = `
         color: red;
         text-align: center;
     }
-
+    #gameDurationInput {
+        width: 60px
+    }
     .startRestart,
     .stopMusic {
         align-self: flex-end;
@@ -149,6 +151,7 @@ const styles = `
     #pereNoel {
         height: 40px;
         width: 40px;
+        border-radius: 5em;
         position: absolute;
         transition: 0.3s;
         animation: cible 30s infinite;
@@ -160,7 +163,12 @@ const styles = `
         }
     }
 
-    @media screen and (max-width:650px) {
+    @media screen and (max-width:630px) {
+        .gameInfo {
+            gap: 50px; 
+        }
+        }
+    @media screen and (max-width:830px) {
         .settingsContainer {
             gap: 10px;
         }
@@ -250,13 +258,13 @@ let isAnimating = false;
 
 // animation nombre
 function animation1() {
-    // Premier changement de transformation au bout de 1000 ms
+    // Premier changement de transformation au bout de 0 ms
     setTimeout(() => {
         number.style.transition = "scale 1s linear";
         number.style.scale= "1 -0.029";
     }, 0);
 
-    // Deuxième changement de transformation au bout de 3000 ms
+    // Deuxième changement de transformation au bout de 2000 ms
     setTimeout(() => {
         number.style.transition = "rotate 2s linear"
         number.style.rotate = "90deg";
@@ -267,7 +275,7 @@ function animation1() {
     setTimeout(()=>{
         // Cacher le bouton
         buttonCase.style.display = "none";
-        // Activer la modal
+        // appararition de la modal au bout de 9000 ms
         containerModal.classList.add("active");
     }, 9000)
 }
@@ -282,7 +290,7 @@ buttonCase.addEventListener("click", () => {
         leftHalf.style.transform = "translateX(-70%)";
         rightHalf.style.transform = "translateX(70%)";
 
-        // temps pour ajuster la transition de la musique avec les portes
+        // 8000 ms: temps pour ajuster la transition de la musique avec les portes
          setTimeout(() => {
             // jouer la musique
              backgroundMusic.play();
@@ -323,7 +331,7 @@ gameInfo.append(score)
 
 const temps = document.createElement('span')
 temps.className = "temps"
-temps.textContent = "time : 0"
+temps.textContent = "time : "
 gameInfo.append(temps)
 
 const containerGame = document.createElement('div')
@@ -342,7 +350,7 @@ settingsContainer.append(startRestart)
 
 const rules = document.createElement('h1');
 rules.className = "rules"
-rules.textContent = "Shoot as many Christmas gift as you can, but take care not to shoot Santa Claus"
+rules.textContent = "Touch as many Christmas gift as you can, but take care not to touch Santa Claus"
 settingsContainer.append(rules)
 
 // Création d'un bouton permettant d'arrêter la musique
@@ -356,26 +364,47 @@ settingsContainer.append(stopMusic)
 
 stopMusic.addEventListener('click', () => {
     if (backgroundMusic.paused) {
-        // If the music is paused, play it
+        // Si on met la musique est en pause, on appuye sur le bouton pour la jouer
         stopMusic.textContent = 'stop music'
         backgroundMusic.play();
     } else {
-        // If the music is playing, pause it
+        // Si la musique est en train d'être jouer, la mettre en pause
         stopMusic.textContent = 'play Music'
         backgroundMusic.pause();
     }
 });
 
+// Sélection de mes éléments Html
+let theScore = document.querySelector('.score');
+let leTemps = document.querySelector('.temps');
+let containerShoot = document.querySelector('.containerGame');
+let restartBtn = document.querySelector('.startRestart');
+let gameProgress = false;
 
-// Sélection de mes éléments Html 
-let theScore = document.querySelector('.score')
-let leTemps = document.querySelector('.temps')
-let containerShoot = document.querySelector('.containerGame')
-let restartBtn = document.querySelector('.startRestart')
+// Création dynamique de l'input pour la durée du jeu
+let inputContainer = document.createElement("div");
+inputContainer.className = "time-input-container";
+let label = document.createElement("label");
+label.textContent = "Set Game Duration:";
+let gameDurationInput = document.createElement("input");
+gameDurationInput.type = "number";
+gameDurationInput.id = "gameDurationInput";
+gameDurationInput.min = "1";
+gameDurationInput.value = "30";
+
+inputContainer.append(label, gameDurationInput);
+// je met dans gameInfo l'input que je viens de créer
+document.querySelector('.gameInfo').append(inputContainer);
 
 restartBtn.addEventListener("click", function () {
+    // Tant que le jeu est en cours, on ne fait rien
+    if (gameProgress === true) {
+        return;
+    }
+
+    gameProgress = true;
     let score = 0;
-    let temps = 30;
+    let temps = parseInt(gameDurationInput.value); // Utilisez la valeur de l'input comme la durée du jeu
     containerShoot.innerHTML = "";
 
     let interval = setInterval(function cibleBouge() {
@@ -384,44 +413,44 @@ restartBtn.addEventListener("click", function () {
             img.src = src;
             img.id = id;
             containerShoot.append(img);
-            img.style.top = Math.random() * (containerShoot.clientHeight - img.offsetHeight) + "px"
-            img.style.right = Math.random() * (containerShoot.clientWidth - img.offsetWidth) + "px"
+            img.style.top = Math.random() * (containerShoot.clientHeight - img.offsetHeight) + "px";
+            img.style.right = Math.random() * (containerShoot.clientWidth - img.offsetWidth) + "px";
             return img;
         }
 
         let cible = createImage("./img/cadeau.jpg", "cible");
-        let pereNoel = createImage("./img/pereNoel.jpg", "pereNoel")
+        let pereNoel = createImage("./img/pereNoel.jpg", "pereNoel");
 
-        // disparition cible après un certain temps 
+        // disparition cible après un certain temps
         setTimeout(function () {
             cible.remove();
             pereNoel.remove();
-        }, 2000)
+        }, 2000);
 
         // clique sur la cible
         cible.addEventListener("click", function () {
-            score += 1
-            cible.style.display = "none"
-            theScore.textContent = `score : ${score}`
-        })
+            score += 1;
+            cible.style.display = "none";
+            theScore.textContent = `score : ${score}`;
+        });
 
         // clique sur le père Noël
         pereNoel.addEventListener("click", function () {
-            score -= 1
-            pereNoel.style.display = "none"
-            theScore.textContent = `score : ${score}`
-        })
+            score -= 1;
+            pereNoel.style.display = "none";
+            theScore.textContent = `score : ${score}`;
+        });
 
         temps -= 1;
 
-        // affichage de nos infos 
-        leTemps.textContent = `time : ${temps}`
+        // affichage de nos infos
+        leTemps.textContent = `time : ${temps}`;
 
-        // fin du jeu 
+        // fin du jeu
         if (temps === 0) {
-            clearInterval(interval)
-            containerShoot.textContent = "The End"
-            
+            clearInterval(interval);
+            containerShoot.textContent = "The End";
+            gameProgress = false; // on met fin au jeu
         }
-    }, 500) // Définir le délai à 500 millisecondes (0,5 seconde) pour une apparition plus fréquente
-})
+    }, 500); // Définir le délai à 500 millisecondes (0,5 seconde) pour une apparition plus fréquente
+});
