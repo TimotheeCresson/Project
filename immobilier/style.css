@@ -1,0 +1,133 @@
+*, ::before, ::after
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    height: 100vh;
+}
+header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: url(./images/header/headerbg.jpg) center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.container img {
+    height: 10vh;
+    margin-right: 100px;
+}
+.navigation {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 120px;
+}
+.espaceClient{
+    width: 120px;
+    text-align: center;
+    background-color: rgb(53, 1, 53);
+    border: 2px solid white;
+}
+.espaceClient a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+.liensSociaux {
+    display: flex;
+}
+.lien {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 40px;
+}
+.lien i {
+    font-size: 1.5em;
+}
+.lien:first-child {
+    background-color: rgb(155, 235, 35);
+}
+.lien:last-child { 
+    background-color: rgb(103, 170, 1);
+}
+.lien:nth-child(2) {
+    background-color: rgb(119, 196, 5);
+}
+.spanWhite {
+    color: white;
+}
+.spanGreen {
+    color: rgb(155, 235, 35);
+}
+.spanPurple {
+    color: rgb(53, 1, 53);
+}
+.spanPourcentage {
+    float: left;
+    font-size: 3em;
+}
+.spanUppercase {
+    text-transform: uppercase;
+}
+.slogan {
+    display: flex;
+}
+.slogan p {
+    line-height: 1.5; 
+    align-self: left;
+}
+.center {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.explication {
+    text-align: center;
+    color: white;
+    font-size: 0.5em;
+}
+.savoirPlus {
+    background-color: rgb(155, 235, 35);
+    padding: 10px 10px;
+    margin-bottom: 30px;
+}
+.savoirPlus a {
+    color: white;
+    text-decoration: none;
+}
+
+.linkInfo {
+    background: rgb(53, 1, 53);
+}
+.link{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.link a {
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 0.6em;
+    margin: 20px 0 30px 0;
+}
+.link a:hover {
+    background-color: purple;
+}
