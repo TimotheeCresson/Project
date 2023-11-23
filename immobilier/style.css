@@ -184,9 +184,11 @@ header {
 }
 
 .savoirPlus {
-    background-color: rgb(155, 235, 35);
+    background-color: rgb(93, 145, 14);
     padding: 15px 10px;
     margin-bottom: 30px;
+    text-transform: uppercase;
+    font-family: var(--font--Aneliza);
 }
 .savoirPlus a {
     color: white;
@@ -291,7 +293,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: url(./images/header/headerbg.jpg) center / cover repeat;
+    background: url(./images/header/headerbg.jpg) bottom / contain repeat;
 }
 .ligneService h2 {
     color: white;
@@ -325,13 +327,13 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 .nameService i{
-    font-size: 2em;
+    font-size: 2.5em;
 }
 .nameService h4 {
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-family: var(--font--AnelizaMedium);
     color: #b56aff;
 }
@@ -345,6 +347,78 @@ header {
 .textService p {
     font-size: 0.8em;
     text-align: center;
-    font-family: var(--font--AnelizaLight);
+    font-family: var(--font--Aneliza);
     color: #b56aff;
+}
+
+/* Styles spécifiques à la section "Que recherchez-vous ?" */
+.recherche {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.rechercheContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.recherche h2 {
+    font-family: var(--font--Aneliza);
+}
+
+.bien p,
+.localisation p {
+    font-family: var(--font--AnelizaMedium);
+    text-transform: uppercase;
+    color: rgb(68, 1, 68);
+    font-size: 1em;
+    margin: 5px;
+}
+
+.localisation p {
+    text-align: start;
+}
+
+.budget {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px; 
+}
+
+.budget p {
+    font-family: var(--font--AnelizaMedium);
+    text-transform: uppercase;
+    color: rgb(68, 1, 68);
+    font-size: 1em;
+    margin: 5px;
+}
+
+.budget div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.budget div span input {
+    width: 120px;
+    margin: 0 5px;
+}
+.budget div span input::placeholder {
+    color: rgb(68, 1, 68); 
+    font-family: var(--font--Aneliza);
+    text-align: end;
+    opacity: 1;
+}
+.lancerRecherche {
+    color: white;
+    text-decoration: none;
+    margin-top: 20px;
+    font-size: .8em;
 }

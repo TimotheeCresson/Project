@@ -154,16 +154,29 @@
         </article>
     </div>
 
-
-
-
-
-
-
-
-
-
-
+    <!-- aide de recherche  -->
+    <section class="recherche">
+        <h2>Que recherchez-vous ?</h2>
+        <div class="rechercheContainer">
+            <div class="bien">
+                <p>Type de bien</p>
+                <select name="tousType" id="tousType">
+                    <option value="">Tous type</option>
+                </select>
+            </div>
+            <div class="localisation">
+                <p>localisation</p>
+                <input type="text" name="localisation" id="localisationInput">
+            </div>
+            <div class="budget"> <!-- Ajout de la classe "budget" pour les éléments Budget -->
+                <p>Budget</p>
+                <div>
+                    <p>de <span><input type="text" name="min" id="min" placeholder="€"></span> à <span><input type="text" name="max" id="max" placeholder="€"></span>  </p>
+                </div>
+            </div>
+            <a href="#" class="savoirPlus lancerRecherche">Lancer la recherche</a>
+        </div>
+    </section>
 
 
 </body>
