@@ -9,18 +9,32 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="container">
-            <img src="./images/header/logo.png" alt="logo">
+            <div class="hautHeader">
+                <img src="./images/header/logo.png" alt="logo">
+                <p>
+                    <span class="spanWhite spanVente">Pour vendre mieux,</span> <br>
+                    <span class="spanGreen spanUppercase">voici l'astuce! </span>
+                </p>
+            </div>
             <div class="slogan">
-                <p><span class="spanWhite">Pour vendre mieux,</span> <br>
-                <span class="spanGreen spanUppercase">voici l'astuce! </span><br>
-                <span class="spanPurple spanUppercase">des honoriares réduits </span> <br>
-            <span class="spanWhite"><span class="spanPourcentage">1,2% </span>du prix de la vente* </span> <br><span class="spanWhite spanUppercase">seulement</span> </p>
+                <p>
+                    <span class="spanPurple spanUppercase spanSloganMid">des honoraires réduits </span> <br>
+                    <span class="spanWhite spanSloganMid">
+                        <span class="spanPourcentageContainer">
+                            <span class="spanGros">1</span><span class="spanPetit">,2</span>
+                            <span class="spanPourcentage">%</span>
+                        </span>
+                        du prix de la vente*
+                    </span><br>
+                    <span class="spanWhite spanUppercase spanSeulement">seulement</span>
+                </p>
             </div>
             <div class="center">
                 <div class="explication">
-                    <p>Taux de 1,2% TTC pour un prix de vente supérieur ou égal à 159 999 €. <br> Honoraires d'agence forfaitaires de 1699 € TTC pour un prix de vente inférieur à 159 999 €.</p>
+                    <p>*Taux de 1,2% TTC pour un prix de vente supérieur ou égal à 159 999 €. <br> Honoraires d'agence forfaitaires de 1699 € TTC pour un prix de vente inférieur à 159 999 €.</p>
                 </div>
                 <div class="savoirPlus">
                     <a href="#">En savoir plus</a>
@@ -39,6 +53,7 @@
         </nav>
     </header>
 
+    <!-- Section lien -->
     <div class="linkInfo">
         <div class="link">
             <a href="#">qui sommes-nous ?</a>
@@ -48,6 +63,101 @@
             <a href="#">nous contacter</a>
         </div>
     </div>
+
+    <!-- Section qui sommes-nous? -->
+    <section class="descriptionAgence">
+        <div class="explicationAgence">
+            <h1>qui sommes-nous ?</h1>
+            <p>
+                Professionnels de l'immobilier depuis plus de 15 ans, nous somme un intermédiaire entre vendeurs et acquéreurs. 
+                Notre volonté est de mener à bien toute transaction dans le respect de chacun, en offrant un suivi sérieux dans l'intérêt des deux parties <span class="textColor">à un coût très réduit de 1% HT du prix de vente.</span>
+            </p>
+        </div>
+        <div class="sectionPlus">
+            <div class="lesPlus">
+                <div>
+                    <i class="fa-solid fa-plus" style="color: #75ce01;"></i>
+                </div>
+                <p>Des frais d'agence réduits</p>
+            </div>
+            <div class="lesPlus">
+                <div>
+                    <i class="fa-solid fa-plus" style="color: #75ce01;"></i>
+                </div>
+                <p>Un service de qualité</p>
+            </div>
+            <div class="lesPlus">
+                <div>
+                    <i class="fa-solid fa-plus" style="color: #75ce01;"></i>
+                </div>
+                <p>Des visites ciblées</p>
+            </div>
+            <div class="lesPlus">
+                <div>
+                    <i class="fa-solid fa-plus" style="color: #75ce01;"></i>
+                </div>
+                <p>Des délais Raccourcis</p>
+            </div>
+            <div class="savoirPlus prestations">
+                <a href="#">En savoir + sur nos prestations</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Services En lignes -->
+
+    <div class="ligneService">
+        <h2>Nos services en ligne</h2>
+
+        <article class="service">
+            <div class="nameService">
+                <i class="fa-solid fa-stethoscope" style="color: #b56aff;"></i>
+                <h4>Diagnostics</h4>
+            </div>
+            <div class="textService">
+                <p>Identifiez en quelques clics les diagnostics immobiliers à effectuer pour la vente de votre bien.</p>
+                <a href="#" class="savoirPlus colorPlus">En savoir +</a>
+            </div>
+        </article>
+
+        <article class="service">
+            <div class="nameService">
+                <i class="fa-regular fa-handshake" style="color: #b56aff;"></i>
+                <h4>Demande de rendez-vous</h4>
+            </div>
+            <div class="textService">
+                <p>Prenez rendez-vous avec l'un de nos conseillers pour l'estimation et la mise en vente de votre bien.</p>
+                <a href="#" class="savoirPlus colorPlus">En savoir +</a>
+            </div>
+        </article>
+
+        <article class="service">
+            <div class="nameService">
+                <i class="fa-solid fa-calculator" style="color: #b56aff;"></i>
+                <h4>simulateurs</h4>
+            </div>
+            <div class="textService">
+                <p>Evaluez vos capacités d'emprunt. Calculez le montant de votre prêt ou de vos mensualités. Estimez vos frais de notaire.</p>
+                <a href="#" class="savoirPlus colorPlus">En savoir +</a>
+            </div>
+        </article>
+
+        <article class="service">
+            <div class="nameService">
+                <i class="fa-solid fa-house-circle-check" style="color: #b56aff;"></i>
+                <h4>Demande de financement</h4>
+            </div>
+            <div class="textService">
+                <p>Laissez-nous vos coordonnées et un courtier vous contactera pour effectuer une étudee de financement gratuite et sans engagement.</p>
+                <a href="#" class="savoirPlus colorPlus">En savoir +</a>
+            </div>
+        </article>
+    </div>
+
+
+
+
+
 
 
 
