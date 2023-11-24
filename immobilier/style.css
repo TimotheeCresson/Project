@@ -189,6 +189,8 @@ header {
     margin-bottom: 30px;
     text-transform: uppercase;
     font-family: var(--font--Aneliza);
+    color: white;
+    text-decoration: none;
 }
 .savoirPlus a {
     color: white;
@@ -294,6 +296,7 @@ header {
     align-items: center;
     justify-content: center;
     background: url(./images/header/headerbg.jpg) bottom / contain repeat;
+    flex-wrap: wrap;
 }
 .ligneService h2 {
     color: white;
@@ -320,7 +323,6 @@ header {
     margin: 10px;
 }
 
-/* Si vous voulez ajouter de l'espace entre les articles .service, vous pouvez ajouter une marge à .service */
 
 .nameService {
     display: flex;
@@ -358,7 +360,7 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 20px;
+    background: rgb(218, 233, 238);
 }
 
 .rechercheContainer {
@@ -366,10 +368,12 @@ header {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
+    margin-top: 20px;
 }
 
 .recherche h2 {
     font-family: var(--font--Aneliza);
+    margin-top: 20px;
 }
 
 .bien p,
@@ -421,4 +425,107 @@ header {
     text-decoration: none;
     margin-top: 20px;
     font-size: .8em;
+}
+
+/* Section maisons */
+.immobilierSection h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font--AnelizaSemiBold);
+    margin: 20px;
+    font-size: 1.3em;
+}
+.selectionImmobiliers {
+    display: flex;
+    justify-content: space-evenly;
+}
+.selectionImmobiliers p {
+    font-family: var(--font--AnelizaSemiBold);
+    color: rgb(68, 1, 68); 
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.imageMaisons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Ajustez la valeur selon votre préférence pour l'espacement horizontal */
+    margin: auto 10px;
+}
+
+.imageMaisons img {
+    width: 100%; 
+    max-width: 350px; 
+    height: 300px; 
+}
+.plusDeBiens {
+    color: white;
+    text-decoration: none;
+}
+
+/* Section contact */
+.contact {
+    background: rgb(218, 233, 238);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contact h2 {
+    margin-top: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(68, 1, 68); 
+    font-family: var(--font--AnelizaMedium);
+}
+.coordonnees {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    margin: 20px;
+}
+.coordonneesName p{
+    font-family: var(--font--AnelizaSemiBold);
+    color: rgb(68, 1, 68); 
+    font-size: 1.2em;
+}
+.message {
+    margin: 20px;
+}
+#messageInput {
+    width: 90vw;
+    height: 100px;
+}
+
+/* footer */
+
+.liensFooter {
+    background: purple;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.liensFooter a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    font-family: var(--font--AnelizaMedium);
+    text-transform: uppercase;
+    margin: 20px;
+}
+.realisationSite p {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 20px;
+    color: rgb(68, 1, 68); 
+    font-family: var(--font--AnelizaSemiBold);
+}
+
+
+@media screen and (min-width: 700px) {
+    body {
+        font-size: 20px;
+    }
 }

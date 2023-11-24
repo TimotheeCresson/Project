@@ -162,6 +162,9 @@
                 <p>Type de bien</p>
                 <select name="tousType" id="tousType">
                     <option value="">Tous type</option>
+                    <option value="">Appartements</option>
+                    <option value="">Maisons</option>
+                    <option value="">Terrains</option>
                 </select>
             </div>
             <div class="localisation">
@@ -178,6 +181,75 @@
         </div>
     </section>
 
+    <!-- Section maisons -->
+    <section class="immobilierSection">
+        <h2>Derniers biens mis en ligne</h2>
+        <div class="selectionImmobiliers">
+            <p>appartement</p>
+            <p>-</p>
+            <p>Maisons</p>
+            <p>-</p>
+            <p>Terrains</p>
+        </div>
+        <div class="imageMaisons">
+            <img src="./images/immobilier/houseLuxe.jpg" alt="houseLuxe">
+            <img src="./images/immobilier/houseHobbit.jpg" alt="houseLuxe">
+            <img src="./images/immobilier/houseDark.jpg" alt="houseLuxe">
+            <a href="#" class="savoirPlus plusDeBiens">Voir plus de biens</a>
+        </div>
+    </section>
+
+<!-- Section contact -->
+
+    <section class="contact">
+        <h2>contactez-nous</h2>
+        <div class="coordonnees">
+            <div class="civilite coordonneesName">
+                <p>Civilité*</p>
+                <select name="civilite" id="civilite">
+                    <option value="">Genre</option>
+                    <option value="">M.</option>
+                    <option value="">Mme</option>
+                </select>
+            </div>
+            <div class="nom coordonneesName">
+                <p>Nom*</p>
+                <input type="text" name="nom" id="nomInput">
+            </div>
+            <div class="prenom coordonneesName">
+                <p>Prénom*</p>
+                <input type="text" name="prenom" id="prenomInput">
+            </div>
+            <div class="mail coordonneesName">
+                <p>Adresse mail*</p>
+                <input type="text" name="mail" id="mailInput">
+            </div>
+            <div class="tel coordonneesName">
+                <p>Téléphone*</p>
+                <input type="text" name="tel" id="telInput">
+            </div>
+        </div>
+        <div class="message coordonneesName">
+            <p>Message</p>
+            <input type="text" name="message" id="messageInput">
+            <p>Champs Obligatoires</p>
+        </div>
+        <a href="#" class="savoirPlus envoyer">Envoyer</a>
+    </section>
+
+    <!-- footer  -->
+    <footer class="footer">
+        <div class="liensFooter">
+            <a href="#">informations légales</a>
+            <a href="#">contact</a>
+            <a href="#">plan du site</a>
+            <a href="#">foire aux questions</a>
+            <a href="#">mentions légales</a>
+        </div>
+        <div class="realisationSite">
+            <p>maquette: CAIO | réalisation: nwm Cresson Timothée</p>
+        </div>
+    </footer>
 
 </body>
 </html>
