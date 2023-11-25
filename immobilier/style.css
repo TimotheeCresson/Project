@@ -454,6 +454,7 @@ header {
     text-transform: uppercase;
     text-decoration: none;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 .imageMaisons {
     display: flex;

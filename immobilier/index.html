@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="script.js" defer></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
 </head>
 <body>
     <!-- Header -->
@@ -162,10 +162,10 @@
             <div class="bien">
                 <p>Type de bien</p>
                 <select name="tousType" id="tousType">
-                    <option value="">Tous type</option>
-                    <option value="">Appartements</option>
-                    <option value="">Maisons</option>
-                    <option value="">Terrains</option>
+                    <option value="tousType">Tous type</option>
+                    <option value="appartement">Appartements</option>
+                    <option value="maison">Maisons</option>
+                    <option value="terrain">Terrains</option>
                 </select>
             </div>
             <div class="localisation">
@@ -179,18 +179,18 @@
                 </div>
             </div>
         </div>
-        <a href="#" class="savoirPlus lancerRecherche">Lancer la recherche</a>
+        <button class="savoirPlus lancerRecherche">Lancer la recherche</button>
     </section>
 
     <!-- Section maisons -->
     <section class="immobilierSection">
         <h2>Derniers biens mis en ligne</h2>
         <div class="selectionImmobiliers">
-            <a href="#">appartement</a>
+            <a id="appartement">appartement</a>
             <p>-</p>
-            <a href="#">Maisons</a>
+            <a id="maison">Maisons</a>
             <p>-</p>
-            <a href="">Terrains</a>
+            <a id="terrain">Terrains</a>
         </div>
         <div class="imageMaisons">
         </div>

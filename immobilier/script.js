@@ -1,58 +1,154 @@
 fetch('./data.json')
   .then(response => response.json())
   .then(data => {
-    const imageMaisons = document.querySelector('.imageMaisons');
+    const tousType = document.getElementById("tousType");
+    const optionBiens = tousType.querySelectorAll("option");
+    const lancerRecherche = document.querySelector(".lancerRecherche");
 
-    // on prend le tableau des maisons dans le data de Json
-    const maisonsData = data.maison;
+    const appart = document.getElementById("appartement")
+    console.log(appart);
+    const maison = document.getElementById("maison")
+    const terrain = document.getElementById("terrain")
 
-    // on parcours tout notre tableau de maisons et on crée pour chacune une zone image
-    maisonsData.forEach(maison => {
-      const imgElement = document.createElement('img');
-      imgElement.src = `./images/immobilier/${maison.photos}`;
-      imgElement.alt = maison.titre;
 
-      imgElement.classList.add("image-maison");
-      imageMaisons.append(imgElement);
+    
+    appart.addEventListener("click", ()=> {
+      const imageMaisons = document.querySelector('.imageMaisons');
+      const maisonsData = data.maison;
+      maisonsData.forEach(maison => {
+        const imgElement = document.createElement('img');
+        imgElement.src = `./images/immobilier/${maison.photos}`;
+        imgElement.alt = maison.titre;
+        imgElement.classList.add("image-maison"); // on rajoute dans la class la valeur de l'option
+        imageMaisons.append(imgElement);
+      });
+    })
+    
+    maison.addEventListener("click", ()=> {
+      const imageMaisons = document.querySelector('.imageMaisons');
+      const appartementData = data.appartement;
+      appartementData.forEach(appartement => {
+        const imgElement = document.createElement('img');
+        imgElement.src = `./images/immobilier/${appartement.photos}`;
+        imgElement.alt = appartement.titre;
+        imgElement.classList.add("image-maison"); 
+        imageMaisons.append(imgElement);
+      });
+    })
 
-    imgElement.addEventListener('mouseover', ()=>{
-      const imgElementHover = document.createElement('div')
-      imgElementHover.classList.add("imgElementHover")
-      imgElementHover.style.background = `url("./images/header/headerbg.jpg")`
-      imgElementHover.style.opacity = "0.5"
-      imgElement.append(imgElementHover)
-      console.log(imgElementHover);
-    });
+    terrain.addEventListener("click", ()=> {
+      const imageMaisons = document.querySelector('.imageMaisons');
+      const terrainData = data.terrain;
+      terrainData.forEach(terrain => {
+        const imgElement = document.createElement('img');
+        imgElement.src = `./images/immobilier/${terrain.photos}`;
+        imgElement.alt = terrain.titre;
+        imgElement.classList.add("image-maison");
+        imageMaisons.append(imgElement);
+      });
+    })
 
-  
 
-    });
 
-      const mediaQuery = window.matchMedia( '(max-width: 619px)')
 
-      function handleMediaQueryChange(mediaQuery) {
-        const maisonsImages = document.querySelectorAll(".image-maison")
+    lancerRecherche.addEventListener('click', () => {
+      const imageMaisons = document.querySelector('.imageMaisons');
+      // enlever les images avant d'en rajouter
+      imageMaisons.innerHTML = '';
 
-        if (mediaQuery.matches) {
-          if (maisonsImages.length > 0) {
-            maisonsImages[0].style.display = "none"
-            maisonsImages[1].style.display = "none"
-            maisonsImages[2].style.display = "none"
-          }
-        } else {
-            // Si l'écran est plus grand que 620px, assurez-vous que l'image n'est pas masquée
-            if (maisonsImages.length > 0) {
-              maisonsImages[0].style.display = 'block';
-              maisonsImages[1].style.display = "block"
-              maisonsImages[2].style.display = "block"
+      let selectedOption; 
+
+      optionBiens.forEach(option => {
+        const maisonsData = data.maison;
+        const appartementData = data.appartement;
+        const terrainData = data.terrain;
+
+        if (option.selected) {
+          selectedOption = option.value; 
         }
+
+        if(option.value === "tousType") {
+          maisonsData.forEach(maison => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `./images/immobilier/${maison.photos}`;
+            imgElement.alt = maison.titre;
+            imgElement.classList.add("image-maison", option.value); // on rajoute dans la class la valeur de l'option
+            imageMaisons.append(imgElement);
+          });
+          appartementData.forEach(appartement => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `./images/immobilier/${appartement.photos}`;
+            imgElement.alt = appartement.titre;
+            imgElement.classList.add("image-maison", option.value); 
+            imageMaisons.append(imgElement);
+          });
+          terrainData.forEach(terrain => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `./images/immobilier/${terrain.photos}`;
+            imgElement.alt = terrain.titre;
+            imgElement.classList.add("image-maison", option.value);
+            imageMaisons.append(imgElement);
+          });
+        }
+
+
+        else if (option.value === "maison") {
+          maisonsData.forEach(maison => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `./images/immobilier/${maison.photos}`;
+            imgElement.alt = maison.titre;
+            imgElement.classList.add("image-maison", option.value); // on rajoute dans la class la valeur de l'option
+            imageMaisons.append(imgElement);
+          });
+        } else if (option.value === "appartement") {
+          appartementData.forEach(appartement => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `./images/immobilier/${appartement.photos}`;
+            imgElement.alt = appartement.titre;
+            imgElement.classList.add("image-maison", option.value); 
+            imageMaisons.append(imgElement);
+          });
+        } else if (option.value === "terrain") {
+          terrainData.forEach(terrain => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `./images/immobilier/${terrain.photos}`;
+            imgElement.alt = terrain.titre;
+            imgElement.classList.add("image-maison", option.value);
+            imageMaisons.append(imgElement);
+          });
+        }
+      });
+
+      // cacher toutes les images au départ
+      document.querySelectorAll('.image-maison').forEach(img => {
+        img.style.display = 'none';
+      });
+
+      // montrer seulement les images assiociés à chaque option
+      document.querySelectorAll(`.image-maison.${selectedOption}`).forEach(img => {
+        img.style.display = 'block';
+      });
+
+    });
+
+    const mediaQuery = window.matchMedia('(max-width: 619px)');
+
+    function handleMediaQueryChange(mediaQuery) {
+      const maisonsImages = document.querySelectorAll(".image-maison");
+
+      if (mediaQuery.matches) {
+        maisonsImages.forEach(image => {
+          image.style.display = "none";
+        });
+      } else {
+        maisonsImages.forEach(image => {
+          image.style.display = 'block';
+        });
       }
     }
 
-      mediaQuery.addEventListener("change", handleMediaQueryChange)
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
 
-handleMediaQueryChange(mediaQuery);
+    handleMediaQueryChange(mediaQuery);
   })
   .catch(error => console.error('Error fetching JSON:', error));
-
-
