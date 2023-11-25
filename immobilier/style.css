@@ -190,7 +190,7 @@ header {
 
 .savoirPlus {
     background-color: rgb(93, 145, 14);
-    padding: 15px 10px;
+    padding: 10px 10px;
     margin-bottom: 30px;
     text-transform: uppercase;
     font-family: var(--font--Aneliza);
@@ -220,7 +220,6 @@ header {
     text-transform: uppercase;
     text-decoration: none;
     font-size: 0.6em;
-    margin: auto;
     padding: 20px 14px;
     font-family: var(--font--Aneliza);
 }
@@ -459,16 +458,18 @@ header {
 .imageMaisons {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column-reverse;
     justify-content: center;
     gap: 10px; /* Ajustez la valeur selon votre préférence pour l'espacement horizontal */
     margin: auto 10px;
 }
 
-.imageMaisons img {
+.image-maison{
     width: 100%; 
     max-width: 350px; 
     height: 300px; 
 }
+
 .plusDeBiens {
     color: white;
     text-decoration: none;
@@ -526,8 +527,11 @@ header {
     font-size: 1em;
     font-family: var(--font--AnelizaMedium);
     text-transform: uppercase;
-    margin: 20px;
+    padding: 20px 14px;
 }
+.liensFooter a:hover {
+    background: purple;
+ }
 .realisationSite p {
     text-align: center;
     text-transform: uppercase;
@@ -585,12 +589,11 @@ header {
 }
 
 @media screen and (min-width: 1100px) {
-    body {
-        font-size: 17px;
-    }
+   
     header {
         position: relative;
         background: url("./images/header/headerbg.jpg") center / cover no-repeat;
+        height: 50%;
     }
     
     header::before {
@@ -617,6 +620,11 @@ header {
         z-index: 10;
         width: 90px;
         text-align: center;
+    }
+    .linkInfo {
+        position: relative;
+        bottom: 20px;
+        margin: auto 100px;
     }
     .explicationAgence h1 {
         margin: 20px;
