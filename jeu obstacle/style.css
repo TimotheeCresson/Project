@@ -65,9 +65,8 @@ body {
 }
 .personnage2 {
   position: relative;
-  top: 384px; /* ou la position désirée */
-  left: -120px; /* ou la position désirée */
-  visibility: hidden;
+  top: 384px; 
+  left: -220px; 
 }
 .animationPerso {
   animation: persoSaut 1s ease-in-out;

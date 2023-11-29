@@ -44,7 +44,7 @@ startGame.addEventListener("click", startGameFunction);
 document.addEventListener("keydown", (e) => {
   if (e.code === "ArrowUp") {
     personnage.style.visibility = "visible";
-    personnage2.style.visibility = "hidden";
+    personnage2.style.right = "300px";
     jump();
   }
 });
@@ -52,8 +52,8 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.code === "ArrowDown") {
     resize();
-    personnage2.style.visibility = "visible";
     personnage.style.visibility = "hidden";
+    personnage2.style.left= "-120px";
   }
 });
 
@@ -79,43 +79,54 @@ function resize() {
 
 // vérification obstacle touche personnage
 
-var verifObstacle1 = setInterval(function () {
-  var personnageTop = parseInt(
+const verifObstacle1 = setInterval(function () {
+  const personnageTop = parseInt(
     window.getComputedStyle(personnage).getPropertyValue("top")
   );
-  var obstacleleft = parseInt(
+  const obstacleleft = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("left")
   );
 
-  if (obstacleleft < 80 && obstacleleft > 60 && personnageTop >= 390) {
+  if (obstacleleft < 80 && obstacleleft > 0 && personnageTop >= 390) {
     obstacle1.style.animation = "none";
     alert("perdu");
   }
 });
 
-var verifObstacle2 = setInterval(function () {
-  var personnageTop = parseInt(
+const verifObstacle2 = setInterval(function () {
+  const personnageTop = parseInt(
     window.getComputedStyle(personnage).getPropertyValue("top")
   );
-  var personnage2Top = parseInt(
+
+  const personnage2Top = parseInt(
     window.getComputedStyle(personnage2).getPropertyValue("top")
   );
-  var obstacle2left = parseInt(
+
+  const obstacle2left = parseInt(
     window.getComputedStyle(obstacle2).getPropertyValue("left")
   );
 
+  console.log("personnageTop:", personnageTop);
+  console.log("personnage2Top:", personnage2Top);
+  console.log("obstacle2left:", obstacle2left);
+
   // Conditions de collision pour les deux personnages
-  var collisionPersonnage1 =
-    obstacle2left < 80 && obstacle2left > 0 && personnageTop >= 200;
-  var collisionPersonnage2 =
-    obstacle2left < 80 && obstacle2left > 0 && personnage2Top >= 900;
+  const collisionPersonnage1 =
+    obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 350;
+
+  const collisionPersonnage2 =
+    obstacle2left < 80 && obstacle2left > 0 && personnage2Top >= 300;
+
+  if (collisionPersonnage1) {
+    obstacle2.style.animation = "none";
+    alert("perdu avec personnage 1");
+  }
 
   if (collisionPersonnage2) {
     obstacle2.style.animation = "none";
-    alert("perdu");
-  }
-  if (collisionPersonnage1) {
-    obstacle2.style.animation = "none";
-    alert("perdu");
+    alert("perdu avec personnage 2");
   }
 });
+
+
+

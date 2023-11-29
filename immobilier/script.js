@@ -7,46 +7,60 @@ fetch("./data.json")
     const imageMaisons = document.querySelector(".imageMaisons");
     const appart = document.getElementById("appartement");
 
-    console.log(appart);
+    
     const maison = document.getElementById("maison");
     const terrain = document.getElementById("terrain");
     const maisonsData = data.maison;
     const appartementData = data.appartement;
     const terrainData = data.terrain;
 
-    appart.addEventListener("click", () => {
-      imageMaisons.innerHTML = "";
-      maisonsData.forEach((maison) => {
-        const imgElement = document.createElement("img");
-        imgElement.src = `./images/immobilier/${maison.photos}`;
-        imgElement.alt = maison.titre;
-        imgElement.classList.add("image-maison"); // on rajoute dans la class la valeur de l'option
-        imageMaisons.append(imgElement);
-      });
-    });
-
-    maison.addEventListener("click", () => {
-      imageMaisons.innerHTML = "";
-      appartementData.forEach((appartement) => {
-        const imgElement = document.createElement("img");
-        imgElement.src = `./images/immobilier/${appartement.photos}`;
-        imgElement.alt = appartement.titre;
+    function createImageElements(data, targetElement) {
+      data.forEach((item) => {
+        const imgElementContainer = document.createElement("div");
+        const imgElement = document.createElement("div");
+        const captionElement = document.createElement("div");
+    
+        imgElement.style.backgroundImage = `url(./images/immobilier/${item.photos})`;
         imgElement.classList.add("image-maison");
-        imageMaisons.append(imgElement);
+    
+        imgElementContainer.classList.add("background-overlay");
+    
+        captionElement.classList.add("image-caption");
+        captionElement.innerHTML = `<p>${item.titre}</p><br>${item.ville}<br>${item.prix} €`;
+    
+        imgElementContainer.appendChild(imgElement);
+        imgElementContainer.appendChild(captionElement);
+    
+        imgElementContainer.addEventListener('mouseover', function() {
+          imgElementContainer.style.backgroundImage = `url(./images/header/headerbg.png)`;
+          captionElement.style.opacity = 1;
+          console.log(imgElementContainer);
+        });
+    
+        imgElementContainer.addEventListener('mouseout', function() {
+          imgElementContainer.style.backgroundImage = `url(./images/immobilier/${item.photos})`;
+          captionElement.style.opacity = 0;
+        });
+    
+        targetElement.append(imgElementContainer);
       });
-    });
+    }
+    
 
-    terrain.addEventListener("click", () => {
-      imageMaisons.innerHTML = "";
-      terrainData.forEach((terrain) => {
-        const imgElement = document.createElement("img");
-        imgElement.src = `./images/immobilier/${terrain.photos}`;
-        imgElement.alt = terrain.titre;
-        imgElement.classList.add("image-maison");
-        imageMaisons.append(imgElement);
-      });
-    });
+    // Fonction pour gérer le clic sur un type de bien
+    function handleTypeBien(data, targetElement) {
+      targetElement.innerHTML = ""; // Vider le contenu de l'élément cible
+      createImageElements(data, targetElement);
+    }
+    // Utilisation de la fonction dans vos gestionnaires de clics
+    maison.addEventListener("click", () => handleTypeBien(maisonsData, imageMaisons));
+    appart.addEventListener("click", () => handleTypeBien(appartementData, imageMaisons));
+    terrain.addEventListener("click", () => handleTypeBien(terrainData, imageMaisons))
+    console.log(imageMaisons);
 
+
+
+    
     lancerRecherche.addEventListener("click", () => {
       const imageMaisons = document.querySelector(".imageMaisons");
       // enlever les images avant d'en rajouter
@@ -59,55 +73,39 @@ fetch("./data.json")
           selectedOption = option.value;
         }
 
-        if (option.value === "tousType") {
-          maisonsData.forEach((maison) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `./images/immobilier/${maison.photos}`;
-            imgElement.alt = maison.titre;
-            imgElement.classList.add("image-maison", option.value); // on rajoute dans la class la valeur de l'option
-            imageMaisons.append(imgElement);
-          });
-          appartementData.forEach((appartement) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `./images/immobilier/${appartement.photos}`;
-            imgElement.alt = appartement.titre;
-            imgElement.classList.add("image-maison", option.value);
-            imageMaisons.append(imgElement);
-          });
-          terrainData.forEach((terrain) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `./images/immobilier/${terrain.photos}`;
-            imgElement.alt = terrain.titre;
-            imgElement.classList.add("image-maison", option.value);
-            imageMaisons.append(imgElement);
-          });
-        } else if (option.value === "maison") {
-          maisonsData.forEach((maison) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `./images/immobilier/${maison.photos}`;
-            imgElement.alt = maison.titre;
-            imgElement.classList.add("image-maison", option.value); // on rajoute dans la class la valeur de l'option
-            imageMaisons.append(imgElement);
-          });
-        } else if (option.value === "appartement") {
-          appartementData.forEach((appartement) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `./images/immobilier/${appartement.photos}`;
-            imgElement.alt = appartement.titre;
-            imgElement.classList.add("image-maison", option.value);
-            imageMaisons.append(imgElement);
-          });
-        } else if (option.value === "terrain") {
-          terrainData.forEach((terrain) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `./images/immobilier/${terrain.photos}`;
-            imgElement.alt = terrain.titre;
-            imgElement.classList.add("image-maison", option.value);
-            imageMaisons.append(imgElement);
-          });
-        }
-      });
+        // Fonction pour créer les éléments image en fonction des données
+function createImageElements(data, imageMaisons, optionValue) {
+  data.forEach((item) => {
+    const imgElement = document.createElement("img");
+    imgElement.src = `./images/immobilier/${item.photos}`;
+    imgElement.alt = item.titre;
+    imgElement.classList.add("image-maison", optionValue);
+    imageMaisons.append(imgElement);
+  });
+}
 
+// Boucle pour parcourir les options
+optionBiens.forEach((option) => {
+  if (option.selected) {
+    const selectedOption = option.value;
+    imageMaisons.innerHTML = ""; // Vider le contenu de l'élément imageMaisons
+
+    // Utiliser la fonction createImageElements en fonction de la valeur de l'option
+    if (selectedOption === "tousType") {
+      createImageElements(maisonsData, imageMaisons, selectedOption);
+      createImageElements(appartementData, imageMaisons, selectedOption);
+      createImageElements(terrainData, imageMaisons, selectedOption);
+    } else if (selectedOption === "maison") {
+      createImageElements(maisonsData, imageMaisons, selectedOption);
+    } else if (selectedOption === "appartement") {
+      createImageElements(appartementData, imageMaisons, selectedOption);
+    } else if (selectedOption === "terrain") {
+      createImageElements(terrainData, imageMaisons, selectedOption);
+    }
+  }
+});
+
+      });
       // cacher toutes les images au départ
       document.querySelectorAll(".image-maison").forEach((img) => {
         img.style.display = "none";
@@ -121,10 +119,11 @@ fetch("./data.json")
         });
     });
 
-    // imageMaisons.addEventListener("mouseover", () => {
-    //   imageMaisons.style.background = `url("./images/header/headerbg.jpg")`;
-    //   console.log(imageMaisons);
-    // });
+
+
+imageMaisons.addEventListener('mouseout', function() {
+  imageMaisons.style.backgroundImage = 'initial'; 
+});
 
     const mediaQuery = window.matchMedia("(max-width: 619px)");
 

@@ -478,6 +478,7 @@ header {
     align-self: center;
 }
 
+
 /* Section contact */
 .contact {
     background: rgb(218, 233, 238);
@@ -607,14 +608,15 @@ header {
         flex-direction: row;
         align-items: center;
         right: 200px;
-        gap: 10px;
+        gap: 5px;
     }
     .espaceClient {
         position: relative;
         right: 15px;
+        bottom: 4px;
         z-index: 10;
         text-align: center;
-        padding: 3px 5px;
+        padding: 2px 5px;
     }
     .espaceClient a {
         font-size: 0.7em;
