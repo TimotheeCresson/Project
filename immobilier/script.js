@@ -17,34 +17,47 @@ fetch("./data.json")
     function createImageElements(data, targetElement) {
       data.forEach((item) => {
         const imgElementContainer = document.createElement("div");
-        const imgElement = document.createElement("div");
-        const captionElement = document.createElement("div");
-    
-        imgElement.style.backgroundImage = `url(./images/immobilier/${item.photos})`;
+        const imgElementContainImage = document.createElement("div")
+        const descriptionElement = document.createElement("div")
+        const myImage = document.createElement("div")
+        const imgElement = document.createElement("img");
+        
+        imgElement.src = `./images/immobilier/${item.photos}`;
+        imgElement.alt = item.titre;
         imgElement.classList.add("image-maison");
+
+        myImage.classList.add("myImage")
+        descriptionElement.classList.add("descriptionElement");
+        descriptionElement.innerHTML = `<p>${item.titre}</p><span class ="ville">${item.ville}</span><br><span class ="prix">${item.prix} €</span><br><button class="savoirPlus btnImage">en savoir plus</button>`;
+        
+        imgElementContainImage.classList.add("containImage")
+
+       
+        imgElementContainer.append(imgElementContainImage);
+        imgElementContainImage.append(descriptionElement)
+        imgElementContainImage.append(imgElement)
+
+        imgElementContainImage.append(myImage)
+        myImage.append(imgElement)
+
     
-        imgElementContainer.classList.add("background-overlay");
-    
-        captionElement.classList.add("image-caption");
-        captionElement.innerHTML = `<p>${item.titre}</p><br>${item.ville}<br>${item.prix} €`;
-    
-        imgElementContainer.appendChild(imgElement);
-        imgElementContainer.appendChild(captionElement);
-    
-        imgElementContainer.addEventListener('mouseover', function() {
-          imgElementContainer.style.backgroundImage = `url(./images/header/headerbg.png)`;
-          captionElement.style.opacity = 1;
+        targetElement.append(imgElementContainer);
+        
+        imgElementContainImage.addEventListener('mouseover', function() {
+          descriptionElement.style.display = "block"
           console.log(imgElementContainer);
         });
     
         imgElementContainer.addEventListener('mouseout', function() {
-          imgElementContainer.style.backgroundImage = `url(./images/immobilier/${item.photos})`;
-          captionElement.style.opacity = 0;
+          descriptionElement.style.display = "none"; // Réinitialiser le fond lors du survol
         });
-    
-        targetElement.append(imgElementContainer);
       });
+      
     }
+    
+    
+    
+    
     
 
     // Fonction pour gérer le clic sur un type de bien
@@ -76,11 +89,41 @@ fetch("./data.json")
         // Fonction pour créer les éléments image en fonction des données
 function createImageElements(data, imageMaisons, optionValue) {
   data.forEach((item) => {
+    const imgElementContainer = document.createElement("div");
+    const imgElementContainImage = document.createElement("div")
+    const descriptionElement = document.createElement("div")
+    const myImage = document.createElement("div")
     const imgElement = document.createElement("img");
+    
     imgElement.src = `./images/immobilier/${item.photos}`;
     imgElement.alt = item.titre;
     imgElement.classList.add("image-maison", optionValue);
-    imageMaisons.append(imgElement);
+
+    myImage.classList.add("myImage")
+    descriptionElement.classList.add("descriptionElement");
+    descriptionElement.innerHTML = `<p>${item.titre}</p><span class ="ville">${item.ville}</span><br><span class ="prix">${item.prix} €</span><br><button class="savoirPlus btnImage">en savoir plus</button>`;
+    
+    imgElementContainImage.classList.add("containImage")
+
+   
+    imgElementContainer.append(imgElementContainImage);
+    imgElementContainImage.append(descriptionElement)
+    imgElementContainImage.append(imgElement)
+
+    imgElementContainImage.append(myImage)
+    myImage.append(imgElement)
+
+
+    imageMaisons.append(imgElementContainer);
+    
+    imgElementContainImage.addEventListener('mouseover', function() {
+      descriptionElement.style.display = "block"
+      console.log(imgElementContainer);
+    });
+
+    imgElementContainer.addEventListener('mouseout', function() {
+      descriptionElement.style.display = "none"; // Réinitialiser le fond lors du survol
+    });
   });
 }
 

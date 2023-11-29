@@ -44,7 +44,7 @@ startGame.addEventListener("click", startGameFunction);
 document.addEventListener("keydown", (e) => {
   if (e.code === "ArrowUp") {
     personnage.style.visibility = "visible";
-    personnage2.style.right = "300px";
+    personnage2.style.left = "-220px";
     jump();
   }
 });
@@ -115,16 +115,16 @@ const verifObstacle2 = setInterval(function () {
     obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 350;
 
   const collisionPersonnage2 =
-    obstacle2left < 80 && obstacle2left > 0 && personnage2Top >= 300;
+  obstacle2left < 80 && obstacle2left > 0 && personnage2Top <= 300;
 
   if (collisionPersonnage1) {
     obstacle2.style.animation = "none";
-    alert("perdu avec personnage 1");
+    alert(" vous avez perdu");
   }
 
   if (collisionPersonnage2) {
     obstacle2.style.animation = "none";
-    alert("perdu avec personnage 2");
+    alert(" vous avez perdu");
   }
 });
 
