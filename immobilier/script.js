@@ -109,7 +109,6 @@ function createImageElements(data, imageMaisons, optionValue) {
     imgElementContainer.append(imgElementContainImage);
     imgElementContainImage.append(descriptionElement)
     imgElementContainImage.append(imgElement)
-
     imgElementContainImage.append(myImage)
     myImage.append(imgElement)
 
@@ -162,11 +161,12 @@ optionBiens.forEach((option) => {
         });
     });
 
-
-
 imageMaisons.addEventListener('mouseout', function() {
   imageMaisons.style.backgroundImage = 'initial'; 
 });
+
+
+
 
     const mediaQuery = window.matchMedia("(max-width: 619px)");
 

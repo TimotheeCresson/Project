@@ -1,31 +1,21 @@
 const jeu = document.querySelector(".jeu");
 const personnage = document.querySelector(".personnage");
-// const personnage2 = document.querySelector(".personnage2");
+const personnage2 = document.querySelector(".personnage2");
 const obstacle1 = document.querySelector(".obstacle1");
 const obstacle2 = document.querySelector(".obstacle2");
 const startGame = document.querySelector(".buttonStart");
-const restartGame = document.querySelector(".buttonRestart");
-let jeuEnCours = false;
+
 let jumping = false;
 let resizing = false;
 
+// Fonction pour démarrer le jeu
 function startGameFunction() {
-  if (!jeuEnCours) {
-    console.log("Jeu démarre");
+  console.log("Jeu démarre");
 
-    jeuEnCours = true;
-    animateObstacle(obstacle1, "animationObstacle1");
-    animateObstacle(obstacle2, "animationObstacle2");
-  }
+  // Démarrer l'animation des obstacles avec des délais aléatoires
+  animateObstacle(obstacle1, "animationObstacle1");
+  animateObstacle(obstacle2, "animationObstacle2");
 }
-
-function restartGameFunction() {
-  // Réinitialisez l'état du jeu
-  jeuEnCours = false;
-  // Redémarrez le jeu
-  startGameFunction();
-}
-
 
 // Fonction pour démarrer l'animation d'un obstacle avec un délai aléatoire
 function animateObstacle(obstacle, animationClass) {
@@ -47,15 +37,14 @@ function getRandomDelay() {
   return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
 }
 
-
+// Événement pour commencer le jeu
+startGame.addEventListener("click", startGameFunction);
 
 // Événements sur les touches de direction
 document.addEventListener("keydown", (e) => {
   if (e.code === "ArrowUp") {
-    // personnage.style.visibility = "visible";
-    personnage.style.height = "";
-    personnage.style.top = "";
-    // personnage2.style.right = "300px";
+    personnage.style.visibility = "visible";
+    personnage2.style.left = "-220px";
     jump();
   }
 });
@@ -63,10 +52,8 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.code === "ArrowDown") {
     resize();
-    // personnage.style.visibility = "hidden";
-    personnage.style.height = "auto";
-    personnage.style.top = "465px";
-    // personnage2.style.left= "-120px";
+    personnage.style.visibility = "hidden";
+    personnage2.style.left= "-120px";
   }
 });
 
@@ -90,8 +77,6 @@ function resize() {
   }
 }
 
-startGame.addEventListener("click", startGameFunction);
-restartGame.addEventListener("click", restartGameFunction);
 // vérification obstacle touche personnage
 
 const verifObstacle1 = setInterval(function () {
@@ -113,36 +98,34 @@ const verifObstacle2 = setInterval(function () {
     window.getComputedStyle(personnage).getPropertyValue("top")
   );
 
-  // const personnage2Top = parseInt(
-  //   window.getComputedStyle(personnage2).getPropertyValue("top")
-  // );
+  const personnage2Top = parseInt(
+    window.getComputedStyle(personnage2).getPropertyValue("top")
+  );
 
   const obstacle2left = parseInt(
     window.getComputedStyle(obstacle2).getPropertyValue("left")
   );
 
-  // console.log("personnageTop:", personnageTop);
-  // console.log("personnage2Top:", personnage2Top);
-  // console.log("obstacle2left:", obstacle2left);
+  console.log("personnageTop:", personnageTop);
+  console.log("personnage2Top:", personnage2Top);
+  console.log("obstacle2left:", obstacle2left);
 
   // Conditions de collision pour les deux personnages
   const collisionPersonnage1 =
     obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 350;
 
   const collisionPersonnage2 =
-    obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 450;
+  obstacle2left < 80 && obstacle2left > 0 && personnage2Top <= 300;
 
   if (collisionPersonnage1) {
     obstacle2.style.animation = "none";
-    alert("perdu avec personnage 1");
+    alert(" vous avez perdu");
   }
 
   if (collisionPersonnage2) {
-    console.log("personnageTop:", personnageTop);
-    // console.log("personnage2Top:", personnage2Top);
-    // console.log("obstacle2left:", obstacle2left);
-    // console.log("obstacle2left < 80:", obstacle2left < 80 ,"obstacle2left > 0:", obstacle2left > 0 ,"personnage2Top >= 300:", personnage2Top >= 300);
     obstacle2.style.animation = "none";
-    alert("perdu avec personnage 2");
+    alert(" vous avez perdu");
   }
 });
+
+

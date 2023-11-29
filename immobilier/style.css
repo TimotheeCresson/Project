@@ -499,17 +499,19 @@ header {
 }
 
 .descriptionElement p{
-    font-family: var(--font--AnelizaSemiBold);
+    font-family: var(--font--Aneliza);
     font-size: 2em;
     margin-top: 50px;
 }
 .ville {
-    font-family: var(--font--AnelizaSemiBold);
+    font-family: var(--font--Aneliza);
     font-size: 1.5em;
 }
 .prix {
     font-size: 2em;
     line-height: 2em;
+    font-family: var(--font--Aneliza);
+
 } 
 .btnImage {
     border: none;

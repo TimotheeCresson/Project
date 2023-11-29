@@ -4,28 +4,18 @@ const personnage = document.querySelector(".personnage");
 const obstacle1 = document.querySelector(".obstacle1");
 const obstacle2 = document.querySelector(".obstacle2");
 const startGame = document.querySelector(".buttonStart");
-const restartGame = document.querySelector(".buttonRestart");
-let jeuEnCours = false;
+
 let jumping = false;
 let resizing = false;
 
+// Fonction pour démarrer le jeu
 function startGameFunction() {
-  if (!jeuEnCours) {
-    console.log("Jeu démarre");
+  console.log("Jeu démarre");
 
-    jeuEnCours = true;
-    animateObstacle(obstacle1, "animationObstacle1");
-    animateObstacle(obstacle2, "animationObstacle2");
-  }
+  // Démarrer l'animation des obstacles avec des délais aléatoires
+  animateObstacle(obstacle1, "animationObstacle1");
+  animateObstacle(obstacle2, "animationObstacle2");
 }
-
-function restartGameFunction() {
-  // Réinitialisez l'état du jeu
-  jeuEnCours = false;
-  // Redémarrez le jeu
-  startGameFunction();
-}
-
 
 // Fonction pour démarrer l'animation d'un obstacle avec un délai aléatoire
 function animateObstacle(obstacle, animationClass) {
@@ -47,7 +37,8 @@ function getRandomDelay() {
   return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
 }
 
-
+// Événement pour commencer le jeu
+startGame.addEventListener("click", startGameFunction);
 
 // Événements sur les touches de direction
 document.addEventListener("keydown", (e) => {
@@ -90,8 +81,6 @@ function resize() {
   }
 }
 
-startGame.addEventListener("click", startGameFunction);
-restartGame.addEventListener("click", restartGameFunction);
 // vérification obstacle touche personnage
 
 const verifObstacle1 = setInterval(function () {

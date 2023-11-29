@@ -22,7 +22,6 @@ body {
   width: 60vw;
   border: 1px solid black;
   overflow: hidden;
-  position: relative;
 }
 .personnage {
   height: 170px;
@@ -31,10 +30,10 @@ body {
   height: 25px;
   width: 25px;
   border: 1px solid black;
-  background-color: blue;
+  background-color: green;
   border-radius: 3em;
-  position: absolute;
-  top: 518px;
+  position: relative;
+  top: 343px;
   left: 1070px;
 }
 .animationObstacle1 {
@@ -44,9 +43,9 @@ body {
   height: 20px;
   width: 50px;
   border: 1px solid black;
-  position: absolute;
-  background-color: blue;
-  top: 450px;
+  position: relative;
+  background-color: green;
+  top: 250px;
   left: 1070px;
 }
 .animationObstacle2 {
@@ -55,20 +54,20 @@ body {
 
 .buttonStart {
   padding: 10px 20px;
-  background-color: blue;
+  background-color: green;
   color: white;
   border-radius: 0.5em;
   cursor: pointer;
 }
 .personnage {
-  position: absolute;
+  position: relative;
   top: 395px;
 }
-/* .personnage2 {
-  position: absolute;
-  top: 465px; 
+.personnage2 {
+  position: relative;
+  top: 384px; 
   left: -220px; 
-} */
+}
 .animationPerso {
   animation: persoSaut 1s ease-in-out;
 }
