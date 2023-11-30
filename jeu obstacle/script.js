@@ -10,42 +10,37 @@ let jumping = false;
 let resizing = false;
 
 function startGameFunction() {
-  if (!jeuEnCours) {
+  
     console.log("Jeu démarre");
 
-    jeuEnCours = true;
+
     animateObstacle(obstacle1, "animationObstacle1");
     animateObstacle(obstacle2, "animationObstacle2");
-  }
+    console.log(jeuEnCours);
+    function animateObstacle(obstacle, animationClass) {
+      if (!jeuEnCours) {
+      const delay = getRandomDelay();
+    
+      setTimeout(() => {
+        obstacle.classList.add(animationClass);
+    
+        setTimeout(() => {
+          obstacle.classList.remove(animationClass);
+          // Répéter l'animation avec un nouveau délai aléatoire
+          animateObstacle(obstacle, animationClass);
+        }, 4000); // délai pour enlever ma classe
+      }, delay); // délai pour ajouter de nouveau ma classe
+    }
+    }
+    
+    // Générer un délai aléatoire entre 2 et 5 secondes
+    function getRandomDelay() {
+      return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
+    }
 }
 
-function restartGameFunction() {
-  // Réinitialisez l'état du jeu
-  jeuEnCours = false;
-  // Redémarrez le jeu
-  startGameFunction();
-}
+startGame.addEventListener("click", startGameFunction);
 
-
-// Fonction pour démarrer l'animation d'un obstacle avec un délai aléatoire
-function animateObstacle(obstacle, animationClass) {
-  const delay = getRandomDelay();
-
-  setTimeout(() => {
-    obstacle.classList.add(animationClass);
-
-    setTimeout(() => {
-      obstacle.classList.remove(animationClass);
-      // Répéter l'animation avec un nouveau délai aléatoire
-      animateObstacle(obstacle, animationClass);
-    }, 4000); // délai pour enlever ma classe
-  }, delay); // délai pour ajouter de nouveau ma classe
-}
-
-// Générer un délai aléatoire entre 2 et 5 secondes
-function getRandomDelay() {
-  return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
-}
 
 
 
@@ -55,6 +50,7 @@ document.addEventListener("keydown", (e) => {
     // personnage.style.visibility = "visible";
     personnage.style.height = "";
     personnage.style.top = "";
+    personnage.style.left = "0px";
     // personnage2.style.right = "300px";
     jump();
   }
@@ -66,6 +62,7 @@ document.addEventListener("keydown", (e) => {
     // personnage.style.visibility = "hidden";
     personnage.style.height = "auto";
     personnage.style.top = "465px";
+    personnage.style.left = "35px";
     // personnage2.style.left= "-120px";
   }
 });
@@ -90,8 +87,6 @@ function resize() {
   }
 }
 
-startGame.addEventListener("click", startGameFunction);
-restartGame.addEventListener("click", restartGameFunction);
 // vérification obstacle touche personnage
 
 const verifObstacle1 = setInterval(function () {
@@ -105,6 +100,8 @@ const verifObstacle1 = setInterval(function () {
   if (obstacleleft < 80 && obstacleleft > 0 && personnageTop >= 390) {
     obstacle1.style.animation = "none";
     alert("perdu");
+    jeuEnCours = false;
+    console.log(verifObstacle1, verifObstacle2);
   }
 });
 
@@ -132,17 +129,26 @@ const verifObstacle2 = setInterval(function () {
   const collisionPersonnage2 =
     obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 450;
 
-  if (collisionPersonnage1) {
-    obstacle2.style.animation = "none";
-    alert("perdu avec personnage 1");
-  }
+  // if (collisionPersonnage1) {
+  //   obstacle2.style.animation = "none";
+  //   alert("perdu avec personnage 1");
+  // }
 
-  if (collisionPersonnage2) {
-    console.log("personnageTop:", personnageTop);
+  if (collisionPersonnage2 || collisionPersonnage1) {
+    // console.log("personnageTop:", personnageTop);
     // console.log("personnage2Top:", personnage2Top);
     // console.log("obstacle2left:", obstacle2left);
     // console.log("obstacle2left < 80:", obstacle2left < 80 ,"obstacle2left > 0:", obstacle2left > 0 ,"personnage2Top >= 300:", personnage2Top >= 300);
     obstacle2.style.animation = "none";
     alert("perdu avec personnage 2");
+    jeuEnCours = true;
   }
+
+  function restartGameFunction() {
+    jeuEnCours = false;
+    // Redémarrer le jeu
+    startGameFunction();
+    console.log(startGameFunction);
+  }
+  restartGame.addEventListener("click", restartGameFunction);
 });
