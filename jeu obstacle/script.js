@@ -14,28 +14,32 @@ function startGameFunction() {
     console.log("Jeu démarre");
 
 
-    animateObstacle(obstacle1, "animationObstacle1");
-    animateObstacle(obstacle2, "animationObstacle2");
+  animateObstacle(obstacle1, "animationObstacle1");
+  animateObstacle(obstacle2, "animationObstacle2");
 
     function animateObstacle(obstacle, animationClass) {
-        if (!jeuEnCours) {
-        jeuEnCours = true;
-        
+      // on ajoute une propriété jeuEnCours à chaque aux 2 obstacles pour suivre l'état de l'animation séparément pour chacun d'eux 
+      if (obstacle.jeuEnCours != false) {
+        obstacle.jeuEnCours = true;
+  
         const delay = getRandomDelay();
         setTimeout(() => {
+          console.log("Ajout de la classe d'animation :", animationClass);
           obstacle.classList.add(animationClass);
-      
+  
           setTimeout(() => {
+            console.log("Suppression de la classe d'animation :", animationClass);
             obstacle.classList.remove(animationClass);
             // Répéter l'animation avec un nouveau délai aléatoire
             animateObstacle(obstacle, animationClass);
-          }, 4000); // délai pour enlever ma classe
-        }, delay); // délai pour ajouter de nouveau ma classe
+          }, 4000); // Délai pour supprimer la classe
+        }, delay); // Délai pour ajouter la classe
       }
     }
-    function getRandomDelay() {
-      return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
-    }
+    
+  function getRandomDelay() {
+    return Math.floor(Math.random() * (10000 - 2000 + 1)) + 1000;
+  }
 }
 
 startGame.addEventListener("click", startGameFunction);
@@ -90,7 +94,8 @@ const verifObstacle1 = setInterval(function () {
   if (obstacleleft < 80 && obstacleleft > 0 && personnageTop >= 390) {
     obstacle1.style.animation = "none";
     alert("perdu");
-    jeuEnCours = true;
+    jeuEnCours = false;
+
     console.log(verifObstacle1, verifObstacle2);
   }
 });
@@ -123,19 +128,19 @@ const verifObstacle2 = setInterval(function () {
   //   obstacle2.style.animation = "none";
   //   alert("perdu avec personnage 1");
   // }
-  if (collisionPersonnage1) {
-    obstacle2.style.animation = "none";
-    alert("perdu avec personnage 1");
-  }
+  // if (collisionPersonnage1) {
+  //   obstacle2.style.animation = "none";
+  //   alert("perdu avec personnage 1");
+  // }
 
-  if (collisionPersonnage2) {
-    console.log("personnageTop:", personnageTop);
-    // console.log("personnage2Top:", personnage2Top);
-    // console.log("obstacle2left:", obstacle2left);
-    // console.log("obstacle2left < 80:", obstacle2left < 80 ,"obstacle2left > 0:", obstacle2left > 0 ,"personnage2Top >= 300:", personnage2Top >= 300);
-    obstacle2.style.animation = "none";
-    alert("perdu avec personnage 2");
-  }
+  // if (collisionPersonnage2) {
+  //   console.log("personnageTop:", personnageTop);
+  //   // console.log("personnage2Top:", personnage2Top);
+  //   // console.log("obstacle2left:", obstacle2left);
+  //   // console.log("obstacle2left < 80:", obstacle2left < 80 ,"obstacle2left > 0:", obstacle2left > 0 ,"personnage2Top >= 300:", personnage2Top >= 300);
+  //   obstacle2.style.animation = "none";
+  //   alert("perdu avec personnage 2");
+  // }
 
   if (collisionPersonnage2 || collisionPersonnage1) {
     // console.log("personnageTop:", personnageTop);
@@ -144,13 +149,14 @@ const verifObstacle2 = setInterval(function () {
     // console.log("obstacle2left < 80:", obstacle2left < 80 ,"obstacle2left > 0:", obstacle2left > 0 ,"personnage2Top >= 300:", personnage2Top >= 300);
     obstacle2.style.animation = "none";
     alert("perdu avec personnage 2");
-    jeuEnCours = true;
+    jeuEnCours = false;
   // clearInterval(verifObstacle1);
   // clearInterval(verifObstacle2);
   }
 
   function restartGameFunction() {
-    jeuEnCours = false;
+    jeuEnCours = true;
+
     // Redémarrer le jeu
     startGameFunction();
     console.log(startGameFunction);
