@@ -24,11 +24,11 @@ function startGameFunction() {
   
         const delay = getRandomDelay();
         setTimeout(() => {
-          console.log("Ajout de la classe d'animation :", animationClass);
+          // console.log("Ajout de la classe d'animation :", animationClass);
           obstacle.classList.add(animationClass);
   
           setTimeout(() => {
-            console.log("Suppression de la classe d'animation :", animationClass);
+            // console.log("Suppression de la classe d'animation :", animationClass);
             obstacle.classList.remove(animationClass);
             // Répéter l'animation avec un nouveau délai aléatoire
             animateObstacle(obstacle, animationClass);
@@ -82,7 +82,9 @@ function resize() {
 }
 
 // vérification obstacle touche personnage
-
+function check(obstacle) {
+  
+}
 const verifObstacle1 = setInterval(function () {
   const personnageTop = parseInt(
     window.getComputedStyle(personnage).getPropertyValue("top")
@@ -95,7 +97,7 @@ const verifObstacle1 = setInterval(function () {
     obstacle1.style.animation = "none";
     alert("perdu");
     jeuEnCours = false;
-
+    clearInterval(verifObstacle1);
     console.log(verifObstacle1, verifObstacle2);
   }
 });
@@ -150,16 +152,17 @@ const verifObstacle2 = setInterval(function () {
     obstacle2.style.animation = "none";
     alert("perdu avec personnage 2");
     jeuEnCours = false;
-  // clearInterval(verifObstacle1);
-  // clearInterval(verifObstacle2);
+    clearInterval(verifObstacle2);
   }
+});
 
   function restartGameFunction() {
     jeuEnCours = true;
-
+    obstacle1.style.animation = ""; // Remettre l'animation à zéro
+    obstacle2.style.animation = "";
     // Redémarrer le jeu
     startGameFunction();
     console.log(startGameFunction);
   }
   restartGame.addEventListener("click", restartGameFunction);
-});
+
