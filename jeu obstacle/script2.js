@@ -8,40 +8,70 @@ const restartGame = document.querySelector(".buttonRestart");
 let jeuEnCours = false;
 let jumping = false;
 let resizing = false;
-// let obstacle1Array = [];
-// let obstacle2Array = [];
+let obstacle1Array = [];
+let obstacle2Array = [];
 
 function startGameFunction() {
-  
-    console.log("Jeu démarre");
-
+  console.log("Jeu démarre");
 
   animateObstacle(obstacle1, "animationObstacle1");
   animateObstacle(obstacle2, "animationObstacle2");
 
-    function animateObstacle(obstacle, animationClass) {
-      // on ajoute une propriété jeuEnCours à chaque aux 2 obstacles pour suivre l'état de l'animation séparément pour chacun d'eux 
-      if (obstacle.jeuEnCours != false) {
-        obstacle.jeuEnCours = true;
-  
-        const delay = getRandomDelay();
+  function animateObstacle(obstacle, animationClass) {
+    if (!obstacle.jeuEnCours) {
+      obstacle.jeuEnCours = true;
+
+      const delay = Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
+
+      // Set the initial delay before starting the animation
+      const timeoutId = setTimeout(() => {
+        // console.log("Ajout de la classe d'animation :", animationClass);
+        obstacle.classList.add(animationClass);
+
         setTimeout(() => {
-          // console.log("Ajout de la classe d'animation :", animationClass);
-          obstacle.classList.add(animationClass);
-  
-          setTimeout(() => {
-            // console.log("Suppression de la classe d'animation :", animationClass);
-            obstacle.classList.remove(animationClass);
-            // Répéter l'animation avec un nouveau délai aléatoire
-            animateObstacle(obstacle, animationClass);
-          }, 4000); // Délai pour supprimer la classe
-        }, delay); // Délai pour ajouter la classe
-      }
+          // console.log("Suppression de la classe d'animation :", animationClass);
+          obstacle.classList.remove(animationClass);
+          
+          obstacle.jeuEnCours = false; 
+
+          if (obstacle === obstacle1) {
+            obstacle1Array.push({
+              obstacle: obstacle1,
+              animationClass: "animationObstacle1",
+              delay: delay
+            });
+
+            // Schedule the next animation for obstacle1
+            scheduleNextAnimation(obstacle1, "animationObstacle1");
+          } else if (obstacle === obstacle2) {
+            obstacle2Array.push({
+              obstacle: obstacle2,
+              animationClass: "animationObstacle2",
+              delay: delay
+            });
+
+            // Schedule the next animation for obstacle2
+            scheduleNextAnimation(obstacle2, "animationObstacle2");
+          }
+
+          console.log(obstacle1Array, obstacle2Array);
+        }, 4000);
+      }, delay);
+
+      return timeoutId;
     }
-    
-  function getRandomDelay() {
-    return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
   }
+
+  function scheduleNextAnimation(obstacle, animationClass) {
+    const timeoutId = animateObstacle(obstacle, animationClass);
+    // You can use timeoutId to clear the timeout if needed
+  }
+
+  // Example: Clear the timeout after a certain interval
+  setTimeout(() => {
+    clearTimeout(obstacle1Array[0].timeoutId);
+    clearTimeout(obstacle2Array[0].timeoutId);
+  }, 15000);
 }
 
 startGame.addEventListener("click", startGameFunction);

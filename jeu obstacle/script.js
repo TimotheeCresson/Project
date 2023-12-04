@@ -32,14 +32,17 @@ function startGameFunction() {
         setTimeout(() => {
           // console.log("Suppression de la classe d'animation :", animationClass);
           obstacle.classList.remove(animationClass);
-
+          const delay1 = Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
+          const delay2 = Math.floor(Math.random() * (2000 - 2000 + 1)) + 1000;
           
           obstacle.jeuEnCours = false; 
 
           if (obstacle === obstacle1) {
-            obstacle1Array.push(animateObstacle(obstacle1, "animationObstacle1"));
+            obstacle2Array.push({ obstacle: obstacle1, animationClass: "animationObstacle2", delay: delay1
+          });
           } else if (obstacle === obstacle2) {
-            obstacle2Array.push(animateObstacle(obstacle2, "animationObstacle2"));
+            obstacle2Array.push({ obstacle: obstacle2, animationClass: "animationObstacle2", delay: delay2
+          });
           }
 
           console.log(obstacle1Array, obstacle2Array);
