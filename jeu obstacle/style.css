@@ -50,7 +50,7 @@ body {
   left: 1070px;
 }
 .animationObstacle2 {
-  animation: parcoursObstacle2 2s infinite;
+  animation: parcoursObstacle 2s infinite;
 }
 
 .buttonStart {
