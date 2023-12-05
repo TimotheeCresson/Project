@@ -89,7 +89,7 @@ body {
     left: 1070px;
   }
   100% {
-    left: -100px;
+    left: -200px;
   }
 }
 @keyframes parcoursObstacle2 {
@@ -97,7 +97,7 @@ body {
     left: 1070px;
   }
   100% {
-    left: -100px;
+    left: -200px;
   }
 }
 
