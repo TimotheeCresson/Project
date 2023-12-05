@@ -22,7 +22,7 @@ function startGameFunction() {
     if (!obstacle.jeuEnCours) {
       obstacle.jeuEnCours = true;
 
-      const delay = Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
+      // const delay = Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
 
       // Set the initial delay before starting the animation
       setTimeout(() => {
@@ -47,7 +47,7 @@ function startGameFunction() {
 
           console.log(obstacle1Array, obstacle2Array);
         }, 4000); 
-      }, delay); 
+      }, 2000); 
   }
 }
 }
@@ -182,3 +182,35 @@ const verifObstacle2 = setInterval(function () {
   }
   restartGame.addEventListener("click", restartGameFunction);
 
+
+function resizeScreen() {
+  console.log('resizeScreen() called');
+  if (window.matchMedia('(max-width: 850px)').matches) {
+    console.log('Screen width is less than or equal to 850px');
+    const verifObstacle1 = setInterval(function () {
+      console.log('verifObstacle1 interval function called');
+      const personnageTop = parseInt(
+        window.getComputedStyle(personnage).getPropertyValue("top")
+      );
+      const obstacleleft = parseInt(
+        window.getComputedStyle(obstacle1).getPropertyValue("left")
+      );
+
+      if (obstacleleft < 50 && obstacleleft > 0 && personnageTop <= 200) {
+        obstacle1.style.animation = "none";
+        alert("perdu");
+        jeuEnCours = false;
+        clearInterval(verifObstacle1);
+        console.log('Collision detected! Game over.');
+      }
+    });
+    if (!resizing) {
+      resizing = false; 
+    }
+  }
+}
+
+// Appeler la fonction pour voir les messages dans la console
+resizeScreen();
+
+  

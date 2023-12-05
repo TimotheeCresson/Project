@@ -19,13 +19,23 @@ body {
 }
 .jeu {
   height: 543px;
-  width: 60vw;
+  width: 80vw;
   border: 1px solid black;
   overflow: hidden;
   position: relative;
 }
-.personnage {
-  height: 170px;
+.button{
+  display: flex;
+  gap: 40px;
+  margin-top: 10px;
+}
+
+.button-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2; /* Ensure the buttons are above the container */
 }
 .obstacle1 {
   height: 25px;
@@ -63,6 +73,7 @@ body {
 .personnage {
   position: absolute;
   top: 395px;
+  height: 170px;
 }
 /* .personnage2 {
   position: absolute;
@@ -99,5 +110,26 @@ body {
   }
   100% {
     top: 395px;
+  }
+}
+
+@media screen and (max-width: 878px) {
+  .personnage {
+    top: 455px;
+    height: 100px;
+  }
+  @keyframes persoSaut {
+    0% {
+      top: 455px;
+    }
+    50% {
+      top: 410px;
+    }
+    100% {
+      top: 455px;
+    }
+  }
+  .animationObstacle2 {
+    animation: none;
   }
 }
