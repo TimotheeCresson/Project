@@ -1,131 +1,462 @@
-const jeu = document.querySelector(".jeu");
-const personnage = document.querySelector(".personnage");
-const personnage2 = document.querySelector(".personnage2");
-const obstacle1 = document.querySelector(".obstacle1");
-const obstacle2 = document.querySelector(".obstacle2");
-const startGame = document.querySelector(".buttonStart");
+/*
+----------------------------------
+  Style
+------------------------------------
+*/ 
+const styles = /* CSS */ `
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: lightgray;
+}
+.container {
+  padding: 15px;
+  background-color: white;
+  border-radius: 1em;
+}
+.jeu {
+  height: 543px;
+  width: 80vw;
+  border: 1px solid black;
+  overflow: hidden;
+  position: relative;
+  background: url(./img/noel2.jpg) center / cover;
+}
 
-let jumping = false;
-let resizing = false;
+.button-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.buttonSet{
+  display: flex;
+  gap: 40px;
+  margin-top: 10px;
+}
+.set {
+  padding: 5px 10px;
+  background-color: red;
+  color: white;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.rules {
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  border: 1px solid white;
+  width: 500px;
+  display: none;
+  z-index: 5;
+}
+.rules div p {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+}
+.obstacle1 {
+  height: 25px;
+  width: 25px;
+  border: 1px solid black;
+  background-color: red;
+  border-radius: 3em;
+  position: absolute;
+  top: 518px;
+  left: 1070px;
+}
+.animationObstacle1 {
+  animation: parcoursObstacle 2s infinite;
+}
+.obstacle2 {
+  height: 20px;
+  width: 50px;
+  border: 1px solid black;
+  position: absolute;
+  background-color: red;
+  top: 450px;
+  left: 1070px;
+}
+.animationObstacle2 {
+  animation: parcoursObstacle 2s infinite;
+}
 
-// Fonction pour démarrer le jeu
-function startGameFunction() {
+.personnage {
+  position: absolute;
+  top: 395px;
+  height: 170px;
+}
+/* .personnage2 {
+  position: absolute;
+  top: 465px; 
+  left: -220px; 
+} */
+.animationPerso {
+  animation: persoSaut 1s ease-in-out;
+}
+
+@keyframes parcoursObstacle {
+  0% {
+    left: 1070px;
+  }
+  100% {
+    left: -200px;
+  }
+}
+@keyframes parcoursObstacle2 {
+  0% {
+    left: 1070px;
+  }
+  100% {
+    left: -200px;
+  }
+}
+
+@keyframes persoSaut {
+  0% {
+    top: 395px;
+  }
+  50% {
+    top: 330px;
+  }
+  100% {
+    top: 395px;
+  }
+}
+
+@media screen and (max-width:688px) {
+  .rules {
+    width: 250px;
+    padding: 10px;
+    line-height: 20px;
+  }
+}
+
+
+@media screen and (max-width: 1100px) {
+  .personnage {
+    top: 455px;
+    height: 100px;
+  }
+  @keyframes persoSaut {
+    0% {
+      top: 455px;
+    }
+    50% {
+      top: 410px;
+    }
+    100% {
+      top: 455px;
+    }
+  }
+  .animationObstacle2 {
+    animation: none;
+  }
+  .obstacle1 {
+    height: 20px;
+    width: 20px;
+    top: 522px;
+  }
+}
+`
+
+
+
+class Game {
+constructor() {
+  this.body = document.querySelector("body");
+
+  this.rulesDiv = document.createElement('div');
+  this.containerDiv = document.createElement('div');
+  this.startButton = this.createButton('Start', 'buttonStart');
+  this.restartButton = this.createButton('Restart', 'buttonRestart');
+  this.rulesButton = this.createButton('Rules', 'buttonRules');
+
+  this.personnageImg = this.createImage('./img/personnage.PNG', 'personnage');
+  this.obstacle1Div = this.createObstacle('obstacle1');
+  this.obstacle2Div = this.createObstacle('obstacle2');
+  // this.jeu = document.querySelector(".jeu");
+  // this.personnage = document.querySelector(".personnage");
+  // this.obstacle1 = document.querySelector(".obstacle1");
+  // this.obstacle2 = document.querySelector(".obstacle2");
+  // this.startGameButton = document.querySelector(".buttonStart");
+  // this.restartGameButton = document.querySelector(".buttonRestart");
+  // this.rulesButton = document.querySelector(".buttonRules");
+  // this.rules = document.querySelector(".rules");
+console.log(this.startGameButton);
+  this.jeuEnCours = false;
+  this.jumping = false;
+  this.resizing = false;
+  this.obstacle1Array = [];
+  this.obstacle2Array = [];
+  this.obstacles = [
+    [this.obstacle1Div, "animationObstacle1"],
+    [this.obstacle2Div, "animationObstacle2"]
+  ];
+  
+  // this.topLimit = parseInt(window.getComputedStyle(this.personnage).getPropertyValue("top"));
+  // this.personnageSize = this.personnage.getBoundingClientRect();
+  // this.leftLimit = parseInt(window.getComputedStyle(this.personnage).getPropertyValue("left")) + this.personnageSize.width;
+  
+  this.jump = this.jump.bind(this);
+  this.resize = this.resize.bind(this);
+  this.verifObstacle1 = this.verifObstacle1.bind(this);
+  this.verifObstacle2 = this.verifObstacle2.bind(this);
+
+  this.createStyles();
+  this.createRules();
+  this.createContainer();
+  this.createGameElements();
+  this.animateObstacle();
+  this.appendElementsToBody();
+  this.addEventListeners();
+  this.createButton();
+  this.createImage();
+  this.createObstacle();
+  this.jump();
+  this.resize();
+  // this.startGameFunction();
+  
+  // this.verifObstacle1();
+  // this.verifObstacle2();
+  // this.restartGameFunction();
+}
+
+createStyles() {
+  const styleElement = document.createElement("style");
+  styleElement.innerHTML = styles;
+  this.body.append(styleElement);
+}
+
+
+
+createRules() {
+  this.rulesDiv.classList.add('rules');
+
+  this.rulesContentDiv = document.createElement('div');
+
+  this.rulesParagraph1 = document.createElement('p');
+
+  this.rulesParagraph1.textContent = '- Esquiver les obstacles';
+
+  this.rulesParagraph2 = document.createElement('p');
+  this.rulesParagraph2.textContent =
+    '- Pour jouer, utiliser les touches directionnelles du clavier, flèche du haut pour sauter et flèche du bas pour rétrécir (ordinateur) ou appuyer en dessous du personnage pour sauter (tablette et téléphone)';
+
+  this.rulesContentDiv.appendChild(this.rulesParagraph1);
+  this.rulesContentDiv.appendChild(this.rulesParagraph2);
+  this.rulesDiv.appendChild(this.rulesContentDiv);
+}
+
+createContainer() {
+  this.containerDiv.classList.add('container');
+
+  this.buttonContainerDiv = document.createElement('div');
+  this.buttonContainerDiv.classList.add('button-container');
+  this.containerDiv.append(this.buttonContainerDiv);
+
+  this.buttonSetDiv = document.createElement('div');
+  this.buttonSetDiv.classList.add('buttonSet');
+
+
+  this.buttonSetDiv.appendChild(this.startButton);
+  this.buttonSetDiv.appendChild(this.restartButton);
+  this.buttonSetDiv.appendChild(this.rulesButton);
+
+  this.buttonContainerDiv.appendChild(this.buttonSetDiv);
+
+  this.jeuDiv = document.createElement('div');
+  this.jeuDiv.classList.add('jeu');
+  this.containerDiv.append(this.jeuDiv);
+}
+
+createGameElements() {
+
+  this.jeuDiv.appendChild(this.personnageImg);
+  this.jeuDiv.appendChild(this.obstacle1Div);
+  this.jeuDiv.appendChild(this.obstacle2Div);
+}
+
+createButton(text, className) {
+  const button = document.createElement('button');
+  button.classList.add(className,'set');
+  button.textContent = text;
+  return button;
+}
+
+createImage(src, alt) {
+  const img = document.createElement('img');
+  img.classList.add(alt);
+  img.src = src;
+  img.alt = alt;
+  return img;
+}
+
+createObstacle(className) {
+  const obstacleDiv = document.createElement('div');
+  obstacleDiv.classList.add(className);
+  return obstacleDiv;
+}
+
+appendElementsToBody() {
+  document.body.appendChild(this.rulesDiv);
+  document.body.appendChild(this.containerDiv);
+}
+
+
+startGameFunction() {
   console.log("Jeu démarre");
+  this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)])
+  }
 
-  // Démarrer l'animation des obstacles avec des délais aléatoires
-  animateObstacle(obstacle1, "animationObstacle1");
-  animateObstacle(obstacle2, "animationObstacle2");
+  animateObstacle(obstacle, animationClass) {
+  if (!this.jeuEnCours) {
+    this.jeuEnCours = true;
+  
+    setTimeout(() => {
+      obstacle.classList.add(animationClass);
+  
+      setTimeout(() => {
+        obstacle.classList.remove(animationClass);
+        this.jeuEnCours = false;
+  
+        this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)]);
+      }, 2000);
+    }, 1000);
+  }
+  }
+
+addEventListeners() {
+  this.startButton.addEventListener("click", () => this.startGameFunction());
+
+  this.restartButton.addEventListener("click", () => this.restartGameFunction());
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "ArrowUp") {
+      this.personnageImg.style.height = "";
+      this.personnageImg.style.top = "";
+      this.personnageImg.style.left = "0px";
+      this.jump();
+    } else if (e.code === "ArrowDown") {
+      this.resize();
+      this.personnageImg.style.height = "auto";
+      this.personnageImg.style.top = "465px";
+      this.personnageImg.style.left = "33px";
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    const personnageRect = this.personnageImg.getBoundingClientRect();
+    const clickYPersonnage = event.clientY - personnageRect.top;
+
+    if (clickYPersonnage >= personnageRect.height / 2) {
+      this.jump();
+      this.personnageImg.style.height = "";
+      this.personnageImg.style.top = "";
+      this.personnageImg.style.left = "0px";
+    }
+  });
+
+  this.rulesButton.addEventListener("click", () => {
+    if (this.rulesDiv.style.display === "block") {
+      this.rulesDiv.style.display = "none";
+    } else {
+      this.rulesDiv.style.display = "block";
+    }
+  })
 }
 
-// Fonction pour démarrer l'animation d'un obstacle avec un délai aléatoire
-function animateObstacle(obstacle, animationClass) {
-  const delay = getRandomDelay();
-
-  setTimeout(() => {
-    obstacle.classList.add(animationClass);
+jump() {
+  if (!this.jumping) {
+    this.jumping = true;
+    this.personnageImg.classList.add("animationPerso");
 
     setTimeout(() => {
-      obstacle.classList.remove(animationClass);
-      // Répéter l'animation avec un nouveau délai aléatoire
-      animateObstacle(obstacle, animationClass);
-    }, 4000); // délai pour enlever ma classe
-  }, delay); // délai pour ajouter de nouveau ma classe
-}
-
-// Générer un délai aléatoire entre 2 et 5 secondes
-function getRandomDelay() {
-  return Math.floor(Math.random() * (8000 - 2000 + 1)) + 1000;
-}
-
-// Événement pour commencer le jeu
-startGame.addEventListener("click", startGameFunction);
-
-// Événements sur les touches de direction
-document.addEventListener("keydown", (e) => {
-  if (e.code === "ArrowUp") {
-    personnage.style.visibility = "visible";
-    personnage2.style.left = "-220px";
-    jump();
-  }
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.code === "ArrowDown") {
-    resize();
-    personnage.style.visibility = "hidden";
-    personnage2.style.left= "-120px";
-  }
-});
-
-// Fonction pour le saut
-function jump() {
-  if (!jumping) {
-    jumping = true;
-    personnage.classList.add("animationPerso");
-
-    setTimeout(() => {
-      personnage.classList.remove("animationPerso");
-      jumping = false;
+      this.personnageImg.classList.remove("animationPerso");
+      this.jumping = false;
     }, 1000);
   }
 }
 
-// Fonction pour redimensionner (ajuster selon vos besoins)
-function resize() {
-  if (!resizing) {
-    resizing = true;
+resize() {
+  if (!this.resizing) {
+    this.resizing = true;
+    // Add your resize logic here
   }
 }
 
-// vérification obstacle touche personnage
 
-const verifObstacle1 = setInterval(function () {
+
+verifObstacle1() {
   const personnageTop = parseInt(
-    window.getComputedStyle(personnage).getPropertyValue("top")
+    window.getComputedStyle(this.personnageImg).getPropertyValue("top")
   );
   const obstacleleft = parseInt(
-    window.getComputedStyle(obstacle1).getPropertyValue("left")
+    window.getComputedStyle(this.obstacle1Div).getPropertyValue("left")
   );
 
-  if (obstacleleft < 80 && obstacleleft > 0 && personnageTop >= 390) {
-    obstacle1.style.animation = "none";
+  if (obstacleleft < 70 && obstacleleft > 0 && personnageTop >= 390) {
+    this.obstacle1Div.style.animation = "none";
     alert("perdu");
+    this.jeuEnCours = false;
+    this.obstacle1Div.style.display = "none";
+    this.obstacle2Div.style.display = "none";
+    console.log(this.obstacle2Array);
   }
-});
+}
 
-const verifObstacle2 = setInterval(function () {
+verifObstacle2() {
   const personnageTop = parseInt(
-    window.getComputedStyle(personnage).getPropertyValue("top")
-  );
-
-  const personnage2Top = parseInt(
-    window.getComputedStyle(personnage2).getPropertyValue("top")
+    window.getComputedStyle(this.personnageImg).getPropertyValue("top")
   );
 
   const obstacle2left = parseInt(
-    window.getComputedStyle(obstacle2).getPropertyValue("left")
+    window.getComputedStyle(this.obstacle2).getPropertyValue("left")
   );
-
-  console.log("personnageTop:", personnageTop);
-  console.log("personnage2Top:", personnage2Top);
-  console.log("obstacle2left:", obstacle2left);
 
   // Conditions de collision pour les deux personnages
   const collisionPersonnage1 =
     obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 350;
 
   const collisionPersonnage2 =
-  obstacle2left < 80 && obstacle2left > 0 && personnage2Top <= 300;
+    obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 450;
 
-  if (collisionPersonnage1) {
-    obstacle2.style.animation = "none";
-    alert(" vous avez perdu");
+  if (collisionPersonnage2 || collisionPersonnage1) {
+    this.obstacle2.style.animation = "none";
+    alert("perdu avec personnage 2");
+    this.jeuEnCours = false;
+    this.obstacle1Div.style.display = "none";
+    this.obstacle2Div.style.display = "none";
   }
+}
 
-  if (collisionPersonnage2) {
-    obstacle2.style.animation = "none";
-    alert(" vous avez perdu");
-  }
-});
+restartGameFunction() {
+  this.jeuEnCours = true;
+  this.obstacle1Div.style.animation = ""; // Remettre l'animation à zéro
+  this.obstacle2Div.style.animation = "";
+  this.obstacle1Div.style.display = "inline";
+  this.obstacle2Div.style.display = "inline";
 
+  // Redémarrer le jeu
+  this.startGameFunction();
+  console.log(this.startGameFunction);
+}
 
+}
+// Instantiate the Game class
+const game = new Game();
+
+// setInterval(() => {
+//   game.verifObstacle1();
+// }, 100);
+
+// setInterval(() => {
+//   game.verifObstacle2();
+// }, 100);
