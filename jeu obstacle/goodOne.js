@@ -216,8 +216,12 @@ const verifObstacle1 = setInterval(function () {
   const obstacleleft = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("left")
   );
+
+const personnageSize = personnage.getBoundingClientRect()
+// on calcule la position left de l'élément personnage et on ajoute sa largeur pour obtenir leftlimit.
+let leftlimit = parseInt(window.getComputedStyle(personnage).getPropertyValue("left")) + personnageSize.width;  // on redéfinit leftlimit et personnageSize pour ne pas avoir de soucis au niveau du reload de la page 
   console.log(obstacleleft, leftlimit);
-// console.log(personnageTop, toplimit);
+console.log(personnageTop, toplimit);
   if (obstacleleft < leftlimit && obstacleleft > 0 && personnageTop >= toplimit) {
     obstacle1.style.animation = "none";
     alert("perdu");
@@ -295,30 +299,33 @@ const verifObstacle2 = setInterval(function () {
     console.log(startGameFunction);
   }
   restartGame.addEventListener("click", restartGameFunction);
+// function resizeScreen() {
+//   console.log('resizeScreen() called');
+//   if (window.matchMedia('(max-width: 1100px)').matches) {
+//     console.log('écran plus petit que 1100px');
+//     const verifObstacle1 = setInterval(function () {
+//       console.log('fonction verifObstacle appelé');
+//       const personnageTop = parseInt(
+//         window.getComputedStyle(personnage).getPropertyValue("top")
+//       );
+//       const obstacleleft = parseInt(
+//         window.getComputedStyle(obstacle1).getPropertyValue("left")
+//       );
+//       const personnageSize = personnage.getBoundingClientRect()
+//       // on calcule la position left de l'élément personnage et on ajoute sa largeur pour obtenir leftlimit.
+//       let leftlimit = parseInt(window.getComputedStyle(personnage).getPropertyValue("left")) + personnageSize.width; 
+//       if (obstacleleft < leftlimit && obstacleleft > 0 && personnageTop >= toplimit) {
+//         obstacle1.style.animation = "none";
+//         alert("perdu");
+//         jeuEnCours = false;
+//         clearInterval(verifObstacle1); 
+//       }
+//     }, 1000); 
+//   }
+// }
 
-  function resizeScreen() {
-    console.log('resizeScreen() called');
-    if (window.matchMedia('(max-width: 1100px)').matches) {
-      console.log('écran plus petit que 1100px');
-      const verifObstacle1 = setInterval(function () {
-        console.log('fonction verifObstacle appelé');
-        const personnageTop = parseInt(
-          window.getComputedStyle(personnage).getPropertyValue("top")
-        );
-        const obstacleleft = parseInt(
-          window.getComputedStyle(obstacle1).getPropertyValue("left")
-        );
-  
-        if (obstacleleft < leftlimit && obstacleleft > 0 && personnageTop >= toplimit) {
-          obstacle1.style.animation = "none";
-          alert("perdu");
-          jeuEnCours = false;
-        }
-      });
-    }
-  }
-  
-  resizeScreen();
+// resizeScreen();
+
   
 
   

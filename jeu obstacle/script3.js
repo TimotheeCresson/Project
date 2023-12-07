@@ -5,6 +5,7 @@
 */ 
 const styles = /* CSS */ `
 *,
+*,
 ::before,
 ::after {
   margin: 0;
@@ -91,8 +92,8 @@ body {
 
 .personnage {
   position: absolute;
-  top: 395px;
-  height: 170px;
+  top: 420px;
+  height: 120px;
 }
 /* .personnage2 {
   position: absolute;
@@ -139,12 +140,17 @@ body {
     line-height: 20px;
   }
 }
-
+@media screen and (max-width: 950px) {
+  .animationObstacle1 {
+    animation: parcoursObstacle 3s infinite;
+  }
+}
 
 @media screen and (max-width: 1100px) {
   .personnage {
-    top: 455px;
-    height: 100px;
+    position: absolute;
+    top: 485px;
+    height: auto;
   }
   @keyframes persoSaut {
     0% {
@@ -172,15 +178,15 @@ body {
 
 class Game {
 constructor() {
+  // création de mes éléments HTML
   this.body = document.querySelector("body");
-
   this.rulesDiv = document.createElement('div');
   this.containerDiv = document.createElement('div');
   this.startButton = this.createButton('Start', 'buttonStart');
   this.restartButton = this.createButton('Restart', 'buttonRestart');
   this.rulesButton = this.createButton('Rules', 'buttonRules');
 
-  this.personnageImg = this.createImage('./img/personnage.PNG', 'personnage');
+  this.personnageImg = this.createImage('./img/personnage2.PNG', 'personnage');
   this.obstacle1Div = this.createObstacle('obstacle1');
   this.obstacle2Div = this.createObstacle('obstacle2');
   // this.jeu = document.querySelector(".jeu");
@@ -192,6 +198,7 @@ constructor() {
   // this.rulesButton = document.querySelector(".buttonRules");
   // this.rules = document.querySelector(".rules");
 console.log(this.startGameButton);
+// setup des différentes fonctionnalités
   this.jeuEnCours = false;
   this.jumping = false;
   this.resizing = false;
@@ -202,28 +209,43 @@ console.log(this.startGameButton);
     [this.obstacle2Div, "animationObstacle2"]
   ];
   
-  // this.topLimit = parseInt(window.getComputedStyle(this.personnage).getPropertyValue("top"));
-  // this.personnageSize = this.personnage.getBoundingClientRect();
-  // this.leftLimit = parseInt(window.getComputedStyle(this.personnage).getPropertyValue("left")) + this.personnageSize.width;
-  
+   
+  //   this.personnageSize = this.personnageImg.getBoundingClientRect();
+  //   this.leftlimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("left")) + personnageSize.width;
+    
   this.jump = this.jump.bind(this);
   this.resize = this.resize.bind(this);
-  this.verifObstacle1 = this.verifObstacle1.bind(this);
-  this.verifObstacle2 = this.verifObstacle2.bind(this);
-
+  // this.verifObstacle1 = this.verifObstacle1.bind(this);
+  // this.verifObstacle2 = this.verifObstacle2.bind(this);
+  this.verifObstacle1Interval = setInterval(() => {
+    this.verifObstacle1();
+  });
+  this.verifObstacle2Interval = setInterval(() => {
+    this.verifObstacle2();
+  });
+ // Création de mes parties
   this.createStyles();
   this.createRules();
   this.createContainer();
   this.createGameElements();
-  this.animateObstacle();
   this.appendElementsToBody();
-  this.addEventListeners();
   this.createButton();
   this.createImage();
   this.createObstacle();
-  this.jump();
+
+// Prendre les sizes de mon personnages
+  this.toplimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("top"));
+  console.log(this.toplimit);
+  this.personnageSize = this.personnageImg.getBoundingClientRect()
+  // on calcule la position left de l'élément personnage et on ajoute sa largeur pour obtenir leftlimit.
+  this.leftlimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("left")) + this.personnageSize.width; 
+
+  this.addEventListeners();
+  // this.animateObstacle(...this.obstacles[Math.floor(Math.random()*this.obstacles.length)])
+  
+
   this.resize();
-  // this.startGameFunction();
+  this.resizeScreen();
   
   // this.verifObstacle1();
   // this.verifObstacle2();
@@ -235,8 +257,6 @@ createStyles() {
   styleElement.innerHTML = styles;
   this.body.append(styleElement);
 }
-
-
 
 createRules() {
   this.rulesDiv.classList.add('rules');
@@ -312,32 +332,13 @@ appendElementsToBody() {
 }
 
 
-startGameFunction() {
-  console.log("Jeu démarre");
-  this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)])
-  }
 
-  animateObstacle(obstacle, animationClass) {
-  if (!this.jeuEnCours) {
-    this.jeuEnCours = true;
-  
-    setTimeout(() => {
-      obstacle.classList.add(animationClass);
-  
-      setTimeout(() => {
-        obstacle.classList.remove(animationClass);
-        this.jeuEnCours = false;
-  
-        this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)]);
-      }, 2000);
-    }, 1000);
-  }
-  }
 
 addEventListeners() {
   this.startButton.addEventListener("click", () => this.startGameFunction());
 
   this.restartButton.addEventListener("click", () => this.restartGameFunction());
+  
   document.addEventListener("keydown", (e) => {
     if (e.code === "ArrowUp") {
       this.personnageImg.style.height = "";
@@ -347,7 +348,7 @@ addEventListeners() {
     } else if (e.code === "ArrowDown") {
       this.resize();
       this.personnageImg.style.height = "auto";
-      this.personnageImg.style.top = "465px";
+      this.personnageImg.style.top = "486px";
       this.personnageImg.style.left = "33px";
     }
   });
@@ -373,6 +374,28 @@ addEventListeners() {
   })
 }
 
+startGameFunction() {
+  console.log("Jeu démarre");
+  this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)])
+  }
+
+animateObstacle(obstacle, animationClass) {
+    console.log(obstacle);
+  if (!this.jeuEnCours) {
+    this.jeuEnCours = true;
+    setTimeout(() => {
+      obstacle.classList.add(animationClass);
+
+      setTimeout(() => {
+        obstacle.classList.remove(animationClass);
+        this.jeuEnCours = false;
+
+        this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)]);
+      }, 2000);
+    }, 1000);
+  }
+}
+
 jump() {
   if (!this.jumping) {
     this.jumping = true;
@@ -394,6 +417,7 @@ resize() {
 
 
 
+
 verifObstacle1() {
   const personnageTop = parseInt(
     window.getComputedStyle(this.personnageImg).getPropertyValue("top")
@@ -401,8 +425,15 @@ verifObstacle1() {
   const obstacleleft = parseInt(
     window.getComputedStyle(this.obstacle1Div).getPropertyValue("left")
   );
+    // on calcule la position left de l'élément personnage et on ajoute sa largeur pour obtenir leftlimit.
+  // this.toplimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("top"));
+  this.personnageSize = this.personnageImg.getBoundingClientRect()
+  this.leftlimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("left")) + this.personnageSize.width;
+  // console.log(personnageTop, this.toplimit);
+  // console.log(obstacleleft, this.leftlimit);
 
-  if (obstacleleft < 70 && obstacleleft > 0 && personnageTop >= 390) {
+
+  if (obstacleleft < this.leftlimit && obstacleleft > 0 && personnageTop >= this.toplimit) {
     this.obstacle1Div.style.animation = "none";
     alert("perdu");
     this.jeuEnCours = false;
@@ -418,7 +449,7 @@ verifObstacle2() {
   );
 
   const obstacle2left = parseInt(
-    window.getComputedStyle(this.obstacle2).getPropertyValue("left")
+    window.getComputedStyle(this.obstacle2Div).getPropertyValue("left")
   );
 
   // Conditions de collision pour les deux personnages
@@ -429,7 +460,7 @@ verifObstacle2() {
     obstacle2left < 80 && obstacle2left > 0 && personnageTop <= 450;
 
   if (collisionPersonnage2 || collisionPersonnage1) {
-    this.obstacle2.style.animation = "none";
+    this.obstacle2Div.style.animation = "none";
     alert("perdu avec personnage 2");
     this.jeuEnCours = false;
     this.obstacle1Div.style.display = "none";
@@ -447,6 +478,32 @@ restartGameFunction() {
   // Redémarrer le jeu
   this.startGameFunction();
   console.log(this.startGameFunction);
+}
+
+resizeScreen() {
+  console.log('resizeScreen() called');
+  if (window.matchMedia('(max-width: 1100px)').matches) {
+    console.log('écran plus petit que 1100px');
+    const verifObstacle1 = setInterval(() => {
+      console.log('fonction verifObstacle appelé');
+      const personnageTop = parseInt(
+        window.getComputedStyle(this.personnageImg).getPropertyValue("top")
+      );
+      const obstacleleft = parseInt(
+        window.getComputedStyle(this.obstacle1Div).getPropertyValue("left")
+      );
+      this.personnageSize = this.personnageImg.getBoundingClientRect()
+      this.leftlimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("left")) + this.personnageSize.width;
+      if (obstacleleft < this.leftlimit && obstacleleft > 0 && personnageTop >= this.toplimit) {
+        this.obstacle1Div.style.animation = "none";
+        alert("perdu");
+        this.jeuEnCours = false;
+        clearInterval(verifObstacle1);
+        console.log(obstacleleft, this.leftlimit);
+        
+      }
+    }, 1000);
+  }
 }
 
 }
