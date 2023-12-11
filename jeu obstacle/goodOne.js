@@ -220,8 +220,8 @@ const verifObstacle1 = setInterval(function () {
 const personnageSize = personnage.getBoundingClientRect()
 // on calcule la position left de l'élément personnage et on ajoute sa largeur pour obtenir leftlimit.
 let leftlimit = parseInt(window.getComputedStyle(personnage).getPropertyValue("left")) + personnageSize.width;  // on redéfinit leftlimit et personnageSize pour ne pas avoir de soucis au niveau du reload de la page 
-  console.log(obstacleleft, leftlimit);
-console.log(personnageTop, toplimit);
+//   console.log(obstacleleft, leftlimit);
+// console.log(personnageTop, toplimit);
   if (obstacleleft < leftlimit && obstacleleft > 0 && personnageTop >= toplimit) {
     obstacle1.style.animation = "none";
     alert("perdu");

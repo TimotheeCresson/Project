@@ -245,7 +245,7 @@ console.log(this.startGameButton);
   
 
   this.resize();
-  this.resizeScreen();
+  // this.resizeScreen();
   
   // this.verifObstacle1();
   // this.verifObstacle2();
@@ -377,6 +377,8 @@ addEventListeners() {
 startGameFunction() {
   console.log("Jeu démarre");
   this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)])
+  // on appelle la fonction prenant en compte les changements pour les écran < 1100px
+  this.resizeScreen();
   }
 
 animateObstacle(obstacle, animationClass) {
@@ -389,7 +391,7 @@ animateObstacle(obstacle, animationClass) {
       setTimeout(() => {
         obstacle.classList.remove(animationClass);
         this.jeuEnCours = false;
-
+        console.log(this.obstacles);
         this.animateObstacle(...this.obstacles[Math.floor(Math.random() * this.obstacles.length)]);
       }, 2000);
     }, 1000);
@@ -432,7 +434,7 @@ verifObstacle1() {
   // console.log(personnageTop, this.toplimit);
   // console.log(obstacleleft, this.leftlimit);
 
-
+    // console.log(personnageTop + ' / ' + this.toplimit);
   if (obstacleleft < this.leftlimit && obstacleleft > 0 && personnageTop >= this.toplimit) {
     this.obstacle1Div.style.animation = "none";
     alert("perdu");
@@ -476,34 +478,30 @@ restartGameFunction() {
   this.obstacle2Div.style.display = "inline";
 
   // Redémarrer le jeu
+  console.log("test");
   this.startGameFunction();
+  // on appelle la fonction prenant en compte les changements pour les écran < 1100px
+  this.resizeScreen();
   console.log(this.startGameFunction);
 }
+
+
 
 resizeScreen() {
   console.log('resizeScreen() called');
   if (window.matchMedia('(max-width: 1100px)').matches) {
-    console.log('écran plus petit que 1100px');
-    const verifObstacle1 = setInterval(() => {
-      console.log('fonction verifObstacle appelé');
-      const personnageTop = parseInt(
-        window.getComputedStyle(this.personnageImg).getPropertyValue("top")
-      );
-      const obstacleleft = parseInt(
-        window.getComputedStyle(this.obstacle1Div).getPropertyValue("left")
-      );
-      this.personnageSize = this.personnageImg.getBoundingClientRect()
-      this.leftlimit = parseInt(window.getComputedStyle(this.personnageImg).getPropertyValue("left")) + this.personnageSize.width;
-      if (obstacleleft < this.leftlimit && obstacleleft > 0 && personnageTop >= this.toplimit) {
-        this.obstacle1Div.style.animation = "none";
-        alert("perdu");
-        this.jeuEnCours = false;
-        clearInterval(verifObstacle1);
-        console.log(obstacleleft, this.leftlimit);
-        
-      }
-    }, 1000);
-  }
+    // this.animateObstacle(...this.obstacles[[this.obstacle1Div, "animationObstacle1"]]);
+    console.log("petit");
+    this.obstacles = [
+      [this.obstacle1Div, "animationObstacle1"]
+    ];
+    }else if (window.matchMedia('(min-width: 1100px)').matches)
+    {
+      this.obstacles = [
+        [this.obstacle1Div, "animationObstacle1"],
+        [this.obstacle2Div, "animationObstacle2"]
+      ];
+    }
 }
 
 }
