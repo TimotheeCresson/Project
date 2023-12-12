@@ -186,7 +186,7 @@ constructor() {
   this.restartButton = this.createButton('Restart', 'buttonRestart');
   this.rulesButton = this.createButton('Rules', 'buttonRules');
 
-  this.personnageImg = this.createImage('./img/personnage2.PNG', 'personnage');
+  this.personnageImg = this.createImage('./img/personnage2.png', 'personnage');
   this.obstacle1Div = this.createObstacle('obstacle1');
   this.obstacle2Div = this.createObstacle('obstacle2');
   // this.jeu = document.querySelector(".jeu");
